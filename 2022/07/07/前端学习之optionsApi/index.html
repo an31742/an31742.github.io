@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端学习之optionsApi - 偶像崇拜</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="computed计算属性1.将逻辑抽取到methods...">
+  <meta name="author" content="an31742">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">前端学习之optionsApi</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">前端学习之optionsApi</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 07, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2928</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <h1 id="computed计算属性"><a href="#computed计算属性" class="headerlink" title="computed计算属性"></a>computed计算属性</h1><p>1.将逻辑抽取到methods，放到methods中的options中</p>
+<p><strong>不足：所有的data使用过程都变成了方法的调用</strong></p>
+<p>2.使用计算属性</p>
+<ul>
+<li>定义：可以包含任何响应式的复杂逻辑</li>
+<li>适用范围：计算属性将被混入组件实例中，所有getter和setter this上下文自动绑定为组件实例</li>
+</ul>
+<p>3.计算属性与其他对比的优点</p>
+<table>
+<thead>
+<tr>
+<th>例子</th>
+<th>模板语法</th>
+<th>methods的实现</th>
+<th>computed实现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>firstName和lastName，希望它们拼接之后在界面上显示<br />一个分数大于60显示几个，小于60显示不及格<br />message变量，在情况确定显示直接显示文字，不确定反转</td>
+<td>不足：存在大量逻辑不便于维护<br />有多次一样的逻辑存在重复代码<br />多次使用的时候多运算也需要多次执行没有缓存</td>
+<td>不足：都是先显示一个结果变成了方法的调用<br/>多次使用没有缓存也需要多次计算</td>
+<td>解决前两个的问题不足</td>
+</tr>
+</tbody></table>
+<p>4.methods和computed的区别：</p>
+<ul>
+<li>computed有缓存不需要多次计算  计算属性的缓存只有当数据发生变化的时候计算属性会重新计算性能提升，methods每次调用都会重新计算一次computed不会</li>
+</ul>
+<p>5.计算属性的方法</p>
+<ul>
+<li>getter :与methods方法类似 返回一个值</li>
+<li>setter:获取到一个value值，使用这个value操作</li>
+</ul>
+<p>6.源码对setter和getter的处理</p>
+<ul>
+<li>只对这个做了一个判断</li>
+</ul>
+<p>7.vue3不支持使用过滤器可以使用计算属性</p>
+<h1 id="watch侦听器"><a href="#watch侦听器" class="headerlink" title="watch侦听器"></a>watch侦听器</h1><ol>
+<li><p>适用范围：监听某个数据的变化</p>
+</li>
+<li><p>监听的范围：默认情况只监听数据本身的变化</p>
+</li>
+<li><p>使用方法：</p>
+<ol>
+<li>&#96;&#96;&#96;js<br>&#x2F;&#x2F;对象的监听方法<br>watch:{<br>info:{<br>   handler(newVale,oldValue){<br>     console.log(newValue,oldValue)<br>  }<br>  deep:true, &#x2F;&#x2F;深度监听<br>  immediate:true, &#x2F;&#x2F;立即执行<br>  ‘info.name’:function(newVale,oldValue){<br>       console.log(newValue,oldValue)<br>  }<br>  }<br>}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. ```</span><br><span class="line">   //第一个参数使侦听的源</span><br><span class="line">   //第二个是回调函数</span><br><span class="line">   //第三个是额外的其它选项</span><br><span class="line">   created()&#123;</span><br><span class="line">        this.$watch(&#x27;meaasge&#x27;,(newValue,oldValue)=&gt;&#123;</span><br><span class="line">        console.log(newValue,oldValue)</span><br><span class="line">    &#125;,deep:true,immediate:true) </span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   </span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>3.不会深度直接监听一个数组，将数组转换成组件，将需要监听的属性传过去，在子组件监听传过去的属性</p>
+</li>
+</ol>
+<h1 id="v-model响应式"><a href="#v-model响应式" class="headerlink" title="v-model响应式"></a>v-model响应式</h1><ol>
+<li><p>业务范围：登录注册需要提交账户和密码</p>
+</li>
+<li><p>表单控件范围：input  textarea select</p>
+</li>
+<li><p>本质原理：v-bind绑定value值  v-on绑定input事件监听到函数中 函数会获取最新的赋值绑定到属性中</p>
+</li>
+<li><p>绑定控件</p>
+<ol>
+<li>绑定checkbox  <ol>
+<li>单个勾选框   v-model是布尔值 input的value值并不影响v-model的值</li>
+<li>多个勾选框  data对应的是一个数组  就会将input的value添加到数组中</li>
+</ol>
+</li>
+<li>绑定radio  用于选择其中的一项</li>
+<li>绑定select  <ol>
+<li>绑定一个值会将他对应的值付给v-model对应data</li>
+<li>绑定的是一个数组就会将选中option对应的value值付给v-model对应的data</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>v-model的修饰符</p>
+<ol>
+<li>lazy   会将绑定的事件切换为change事件只有在提交的时候才触发</li>
+<li>number 会将字符串其他类型转换成数字的数据类型    因为数字类型会自动转换成字符串</li>
+<li>trim 自动过滤输入的空白字符</li>
+<li>v-model也可以在组件上使用</li>
+</ol>
+</li>
+<li><p><strong>补充知识</strong></p>
+<ol>
+<li><p>&#96;&#96;&#96;js<br>&#x2F;&#x2F;浅拷贝<br>const info &#x3D;{name:”kobe”,age:18,friend:{name:”jams”}}<br>const obj&#x3D;Object.assign({},info)</p>
+<p>info.frined.name&#x3D;”礼拜”<br>console.log(obj.friend.name)  &#x2F;&#x2F;礼拜</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   2. 逻辑判断时候会自动将字符串转换成number类型</span><br><span class="line"></span><br><span class="line"># 组件式开发</span><br><span class="line"></span><br><span class="line">1.组件的定义：项目由独立且可复用的组件构成</span><br><span class="line"></span><br><span class="line">2.组件的注册的方式：</span><br><span class="line"></span><br><span class="line">1. 全局组件   都可以使用    </span><br><span class="line"></span><br><span class="line">   ```js</span><br><span class="line">         const app = Vue.createApp(App);</span><br><span class="line">   </span><br><span class="line">         // 使用app注册一个全局组件app.component()</span><br><span class="line">         // 全局组件: 意味着注册的这个组件可以在任何的组件模板中使用</span><br><span class="line">         app.component(&quot;component-a&quot;, &#123;</span><br><span class="line">           template: &quot;#component-a&quot;,</span><br><span class="line">           data() &#123;</span><br><span class="line">             return &#123;</span><br><span class="line">               title: &quot;我是标题&quot;,</span><br><span class="line">               desc: &quot;我是内容, 哈哈哈哈哈&quot;,</span><br><span class="line">             &#125;;</span><br><span class="line">           &#125;,</span><br><span class="line">           methods: &#123;</span><br><span class="line">             btnClick() &#123;</span><br><span class="line">               console.log(&quot;按钮的点击&quot;);</span><br><span class="line">             &#125;,</span><br><span class="line">           &#125;,</span><br><span class="line">         &#125;);</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>局部组件  只有局部可以使用</p>
+<p>在app组件中还有一个components对象，对象中的键值对是 组件的名称: 组件对象 。引入外部文件就可以使用了</p>
+</li>
+</ol>
+<p>3.组件名称： </p>
+<ol>
+<li><p>kebab-case (短横线分隔命名) 定义一个组件时，你也必须在引用这个自定义元素时使用 kebab-case， </p>
+</li>
+<li><p>当使用 PascalCase (首字母大写命名) 定义一个组件时，你在引用这个自定义元素时两种命名法都可以使用。短横线和驼峰都是可以接受的</p>
+</li>
+<li><p>当在使用的时候最好用名字加横线的方式</p>
+<p> ​    </p>
+<p> ​    </p>
+<p> ​    </p>
+<p> ​    </p>
+<p> ​    </p>
+<p> ​    </p>
+<p> ​    </p>
+<p> ​    </p>
+<p> ​    </p>
+<p> ​    </p>
+<p> ​</p>
+</li>
+</ol>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>an31742</li>
+    <li><strong>本文链接：</strong><a href="https://an31742.github.io/2022/07/07/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8BoptionsApi/index.html" title="https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;07&#x2F;%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8BoptionsApi&#x2F;index.html">https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;07&#x2F;%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8BoptionsApi&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue3/" rel="tag">vue3</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2022/07/07/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bwebpack%E9%85%8D%E7%BD%AE/"><i class="iconfont iconleft"></i>前端学习之webpack配置</a>
+    <a href="/2022/07/03/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bvue3%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">前端学习之vue3基础语法<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#computed%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7"><span class="toc-text">computed计算属性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#watch%E4%BE%A6%E5%90%AC%E5%99%A8"><span class="toc-text">watch侦听器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#v-model%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="toc-text">v-model响应式</span></a></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=1139564521 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/an31742 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:a13113586407@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
