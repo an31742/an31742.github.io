@@ -1,0 +1,610 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端学习之vue3CompotinsApi - 偶像崇拜</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="Compositions-Api
+Options AP...">
+  <meta name="author" content="an31742">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">前端学习之vue3CompotinsApi</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">前端学习之vue3CompotinsApi</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 19, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>8759</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <h1 id="Compositions-Api"><a href="#Compositions-Api" class="headerlink" title="Compositions-Api"></a>Compositions-Api</h1><ol>
+<li>Options API的弊端<ol>
+<li>模块对应 例：data定义数据、methods中定义方法</li>
+<li>不足：<ol>
+<li>实现某一个功能逻辑会被拆分到各个属性之中 </li>
+<li>组件变得更大、更复杂时，逻辑关注点的列表就会增长，那么同一个功能的逻辑就会被拆分的很分散</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>setup<ol>
+<li><p>参数 :</p>
+<ol>
+<li>props:它其实就是父组件传递过来的属性会被放到props对象中，我们在setup中如果需要使用，那么就可以直接通过props参数获取<ol>
+<li>定义props的类型，我们还是和之前的规则是一样的，在props选项中定义</li>
+<li>在template中依然是可以正常去使用props中的属性，比如message</li>
+<li>在setup函数中想要使用props，那么不可以通过 this 去获取</li>
+<li>props有直接作为参数传递到setup函数中，所以我们可以直接通过参数</li>
+</ol>
+</li>
+<li>ontext，我们也称之为是一个SetupContext<ol>
+<li>参数：attrs：所有的非prop的attribute</li>
+<li>slots：父组件传递过来的插槽</li>
+<li>emit：当我们组件内部需要发出事件时会用到emit</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>返回值：</p>
+<ol>
+<li>setup的返回值可以在模板template中被使用</li>
+<li>也就是说我们可以通过setup的返回值来替代data选项 返回一个执行函数来代替在methods中定义的方法</li>
+</ol>
+</li>
+<li><p>setup不可以使用this  </p>
+<ol>
+<li>组件实例已经创建出来了，</li>
+<li>this并没有指向当前组件实例 在setup被调用之前，data、computed、methods等都没有解析，所以在setup中不能获取this</li>
+</ol>
+</li>
+<li><p>setup中定义的数据提供响应式的特性</p>
+<ol>
+<li><pre><code class="js"> const  state=reactive(&#123;
+   name:&quot;an31742&quot;,
+   counter:1000
+ &#125;)
+</code></pre>
+</li>
+<li>原理 <ol>
+<li>使用reactive函数处理我们的数据之后，数据再次被使用时就会进行依赖收集</li>
+<li>数据发生改变时，所有收集到的依赖都是进行对应的响应式操作（比如更新界面）</li>
+<li>data选项，也是在内部交给了reactive函数将其编程响应式对象的</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>Ref Api</p>
+<ol>
+<li>作用： ref 会返回一个可变的响应式对象，该对象作为一个 响应式的引用 维护着它内部的值，这就是ref名称的来源<ol>
+<li>在ref的 value 属性中被维护的  </li>
+<li>setup 函数内部，它依然是一个 ref引用， 所以对其进行操作时，我们依然需要使用 ref.value的方式</li>
+</ol>
+</li>
+<li>Ref自动解包<ol>
+<li>模板中的解包是浅层的解包</li>
+<li>将ref放到一个reactive的属性当中，那么在模板中使用时，它会自动解包</li>
+</ol>
+</li>
+<li>参数 readonly <ol>
+<li><p>作用：在Ref或者reactive 传给其他组件在另一个地方可以被使用但是不能被修改</p>
+</li>
+<li><p>原理:readonly会返回原生对象的只读代理（也就是它依然是一个Proxy，这是一个proxy的set方法被劫持，并且不能对其进行修改）</p>
+</li>
+<li><p>常见的三个类型得参数</p>
+<ol>
+<li>普通对象</li>
+<li>reactive返回的对象</li>
+<li>ref的对象</li>
+</ol>
+</li>
+<li><p>使用：readonly处理的原来的对象是允许被修改的</p>
+<ol>
+<li>const info &#x3D; readonly(obj)，info对象是不允许被修改的</li>
+<li>当obj被修改时，readonly返回的info对象也会被修改</li>
+<li>但是我们不能去修改readonly返回的对象info</li>
+</ol>
+</li>
+<li><p>本质：readonly返回的对象的setter方法被劫持了而已</p>
+</li>
+<li><p>&#96;&#96;&#96;js<br> const info&#x3D;{<br>  name:”why”,<br>  age:18,<br> }<br> const state1&#x3D;readonly(info)<br> console.log(state1)<br> const state&#x3D;reactive({<br>  name:”why”,<br>  age:18<br> })<br>const state2 &#x3D; readonly(state)</p>
+<p>const nameRef&#x3D;ref(‘why’)<br>const state3&#x3D;readonly(nameRef)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">4. Reactive判断的API</span><br><span class="line">   1. isProxy 检查对象是否是由 reactive 或 readonly创建的 proxy</span><br><span class="line">   2. isReactive 检查对象是否是由 reactive创建的响应式代理 如果该代理是 readonly 建的，但包裹了由 reactive 创建的另一个代理，它也会返回 true；</span><br><span class="line">   3. isReadonly  检查对象是否是由 readonly 创建的只读代理</span><br><span class="line">   4. toRaw  返回 reactive 或 readonly 代理的原始对象</span><br><span class="line">   5. shallowReactive 创建一个响应式代理，它跟踪其自身 property 的响应性，但不执行嵌套对象的深层响应式转换 (深层还是原生对象)</span><br><span class="line">   6. shallowReadonly 创建一个 proxy，使其自身的 property 为只读，但不执行嵌套对象的深度只读转换</span><br><span class="line">5. toRefs</span><br><span class="line">   1. 目的：当响应式对象做解构的时候使用</span><br><span class="line">   2. S6的解构语法，对reactive返回的对象进行解构获取值，那么之后无论是修改结构后的变量，还是修改reactive返回的state对象，数据都不再是响应式</span><br><span class="line">   3. toRefs的函数，可以将reactive返回的对象中的属性都转成ref   name 和 age 本身都是 ref的 state.name和ref.value之间建立了 链接，任何一个修改都会引起另外一个变化</span><br><span class="line">   4. 作用：一个reactive对象中的属性为ref          </span><br><span class="line">   5. ```js</span><br><span class="line">      const state =reactive(&#123;</span><br><span class="line">         name:&#x27;why&#x27;,</span><br><span class="line">         age:18</span><br><span class="line">      &#125;)</span><br><span class="line">      const &#123;name,age&#125;=toRefs(state) </span><br><span class="line">      age.value</span><br><span class="line">       const changeAge = () =&gt; &#123;</span><br><span class="line">          age.value++;</span><br><span class="line">        &#125;</span><br><span class="line">      //将解构数值变成响应式</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li>ref其他的API<ol>
+<li>unref 获取一个ref引用中的value，那么也可以通过unref</li>
+<li>isRef 判断值是否是一个ref对象</li>
+<li>shallowRef 创建一个浅层的ref对象</li>
+<li>triggerRef 手动触发和 shallowRef 相关联的副作用</li>
+<li>&#96;&#96;&#96;js<br>const info &#x3D;shallowRef({name:’why’,})<br>const changeInfo &#x3D;()&#x3D;&gt;{<br>   info.value.name&#x3D;”coderWhy”<br>   triggerRef(info)<br>}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">   7. customRef</span><br><span class="line">      1. 作用：创建一个自定义的ref，并对其依赖项跟踪和更新触发进行显示控制</span><br><span class="line">      2. 使用：一个工厂函数，该函数接受 track 和 trigger 函数作为参数 该返回一个带有 get 和 set 的对象</span><br><span class="line">6. computed</span><br><span class="line">   1. setup 函数中使用 computed 方法来编写一个计算属性</span><br><span class="line">   2. ```js</span><br><span class="line">        const fullName=computed(&#123;</span><br><span class="line">         get:()=&gt;&#123;</span><br><span class="line">            return firstName.value + &#x27;&#x27; +lastName.value</span><br><span class="line">         &#125;,</span><br><span class="line">         set:newValue=&gt;&#123;</span><br><span class="line">            const names =newValue.split(&quot; &quot;)</span><br><span class="line">            fileName.value=names[0]</span><br><span class="line">            lastName.value=names[1]</span><br><span class="line">         &#125;</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>侦听器</p>
+<ol>
+<li>watchEffect用于自动收集响应式数据的依赖<ol>
+<li>条件：<ol>
+<li>watchEffect传入的函数会被立即执行一次，并且在执行的过程中会收集依赖</li>
+<li>只有收集的依赖发生变化时，watchEffect传入的函数才会再次执行</li>
+</ol>
+</li>
+<li>watchEffect的停止侦听：watchEffect的返回值函数，调用该函数</li>
+<li>watchEffect清除副作用<ol>
+<li><p>在网络请求还没到达的时候再次停止侦听器，侦听器侦听函数被再次执行了，上一次网络请求应该取消掉</p>
+</li>
+<li><p>watchEffect传入的函数被回调时可以获取到一个参数：onInvalidate 副作用即将重新执行 或者 侦听器被停止 时会执行该函数传入的回调函数</p>
+</li>
+<li><p><strong>在setup中使用ref</strong></p>
+</li>
+<li><p>&#96;&#96;&#96;js<br>  const stopWatch&#x3D;watchEffect(()&#x3D;&gt;{<br>console.log(“watchEffect执行”,name.value,age.value)<br>  })<br>  const changeAge&#x3D;()&#x3D;&gt;{<br>age.value++,<br>if(age.value&gt;20){<br>   stopWatch()<br>}<br>  }</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">2. watch需要手动指定侦听的数据源</span><br><span class="line">   1. watch和watchEffect相比的优点</span><br><span class="line">      1. 懒执行副作用（第一次不会直接执行）</span><br><span class="line">      2. 更具体的说明当哪些状态发生变化时，触发侦听器的执行</span><br><span class="line">      3. 访问侦听状态变化前后的值</span><br><span class="line">   2. watch侦听函数的数据源有两种类型：</span><br><span class="line">      1. getter：该getter必须引用可响应式对象(reactive,ref)</span><br><span class="line">       1. ```js</span><br><span class="line">          const state =reactive(&#123;</span><br><span class="line">            name:&quot;why&quot;,</span><br><span class="line">            age:18</span><br><span class="line">          &#125;)</span><br><span class="line"></span><br><span class="line">          watch(()=&gt;state.name,(newValue,oldValue)=&gt;&#123;</span><br><span class="line">            console.log(newValue,oldValue)</span><br><span class="line">          &#125;)</span><br><span class="line"></span><br><span class="line">          const changeName=()=&gt;&#123;</span><br><span class="line">            state.name=&quot;coderWhy&quot;</span><br><span class="line">          &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>&#96;&#96;&#96;js</p>
+<ol>
+<li>&#x2F;&#x2F;reactive或者ref（比较常用的是ref）<br>const name &#x3D;ref(“kobe”)</li>
+</ol>
+<p>watch(name,(newValue,oldValue)&#x3D;&gt;{<br>  console.log(newValue,oldValue)<br>})</p>
+<p>const changeName&#x3D;()&#x3D;&gt;{<br>  state.name&#x3D;”jams”<br>}</p>
+</li>
+</ol>
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">3.  ```js</span><br><span class="line">    1.  //可以监听多个数据源</span><br><span class="line">    const name =ref(&quot;kobe&quot;)</span><br><span class="line">    const age =ref(18)</span><br><span class="line"></span><br><span class="line">     const changeName=()=&gt;&#123;</span><br><span class="line">      state.value=&quot;jams&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    watch([name,age],(newValue,oldValue)=&gt;&#123;</span><br><span class="line">      console.log(newValue,oldValue)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><p>&#96;&#96;&#96;js</p>
+<ol>
+<li>&#x2F;&#x2F;可以监听一个数组或者一个对象那么可以使用getter函数<br>const names &#x3D;reactive([“ABD”,’CNCS’,’JHNK’])</li>
+</ol>
+<p>watch(()&#x3D;&gt;[…name],(newValue,oldValue)&#x3D;&gt;{<br>  console.log(newValue,oldValue)<br>})</p>
+<p>const changeName&#x3D;()&#x3D;&gt;{<br>  names.push&#x3D;”jams”<br>}</p>
+</li>
+</ol>
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">5.  ```js</span><br><span class="line">    1.  //可以设置深度监听</span><br><span class="line">    const state =reactive(&#123;</span><br><span class="line">      name:&quot;why&quot;,</span><br><span class="line">      age:18,</span><br><span class="line">      friend:&#123;</span><br><span class="line">         name:&#x27;kobe&#x27;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">    watch(()=&gt;state,(newValue,oldValue)=&gt;&#123;</span><br><span class="line">      console.log(newValue,oldValue)</span><br><span class="line">    &#125;,&#123;deep:true,immediate:true&#125;)</span><br><span class="line"></span><br><span class="line">    const changeName=()=&gt;&#123;</span><br><span class="line">      state.friend.name=&#x27;aaa&#x27;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>生命周期钩子</p>
+<ol>
+<li>可以直接导入onMount来注册  onCreated来注册  生命周期可以注册多</li>
+<li>beforecreated 和created没有生命周期，在hook setUP可以直接石述思用</li>
+</ol>
+</li>
+<li><p>provide函数</p>
+</li>
+<li><p>参数：</p>
+<ol>
+<li>name：提供的属性名称</li>
+<li>value：提供的属性值</li>
+</ol>
+</li>
+<li><p>&#96;&#96;&#96;js</p>
+<pre><code> let counter=100
+ let info=&#123;
+    name:&quot;why&quot;,
+    age:100
+ &#125;
+
+
+ provide(&quot;counter&quot;,counter)
+ provide(&quot;info&quot;,info)
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">10. Inject函数</span><br><span class="line">    1.  参数：</span><br><span class="line">        1.  要inject的property的name</span><br><span class="line">        2.  默认值</span><br><span class="line">        3.   ```js</span><br><span class="line">            const counter=inject(&quot;counter&quot;)</span><br><span class="line">            const info=inject(&quot;info&quot;)</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>数据响应式</p>
+<ol>
+<li>&#96;&#96;&#96;js<ol>
+<li>&#x2F;&#x2F;provide 值和 inject 值之间的响应性，我们可以在 provide 值时使用 ref 和 reactive<br>   let counter &#x3D;ref(100)<br>   let info&#x3D;reactive({<br>name:’why’,<br>age:18<br>   })<br>   provide(“counter”,counter)<br>   provide(“info”,info) <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">12. 修改响应式property</span><br><span class="line">    1.   ```js</span><br><span class="line">         1.   //修改可响应的数据，那么最好是在数据提供的位置来修改，修改方法进行共享，在后代组件中进行调用</span><br><span class="line">       </span><br><span class="line">       const changeInfo=()=&gt;&#123;</span><br><span class="line">         info.name=&quot;codewhy&quot;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">       provide(&quot;changeInfo&quot;,changeInfo)</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>useCounter</p>
+<ol>
+<li>&#96;&#96;&#96;js<br> 1.  &#x2F;&#x2F;对之前的counter逻辑进行抽取</li>
+</ol>
+<p>   import {ref} from ‘vue’<br>   export function useCounter(){<br>     const counter &#x3D;ref(0)</p>
+<pre><code> const increment =()=&gt;counter.value++
+ const decrement =()=&gt;counter.value--
+ return&#123;
+    cpunter,
+    increment,
+    decrement
+ &#125;
+</code></pre>
+<p>   }<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">14. useTitle</span><br><span class="line">    1.   ```js</span><br><span class="line">         1.  //对之前的counter逻辑进行抽取</span><br><span class="line">       </span><br><span class="line">       import &#123;ref,watch&#125; from &#x27;vue&#x27;</span><br><span class="line">       export function useTitle()&#123;</span><br><span class="line">         const titelRef =ref(title)</span><br><span class="line"></span><br><span class="line">        watch(titelRef,(newValue)=&gt;&#123;</span><br><span class="line">         document.title=newValue</span><br><span class="line">        &#125;,&#123;</span><br><span class="line">         immediate:true</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        return titelRef</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>useScrollPostion</p>
+<ol>
+<li>&#96;&#96;&#96;js<br> 1.  &#x2F;&#x2F;对之前的counter逻辑进行抽取</li>
+</ol>
+<p>   import {ref} from ‘vue’<br>   export function useScrollPostion(){<br>     const scrollX &#x3D;ref(0)<br>     const scrollY &#x3D;ref(0)</p>
+<pre><code>document.addEventListener(&quot;scroll&quot;,()=&gt;&#123;
+ scrollX.value=window.scrollX
+ scrollY.value=window.scrollY
+&#125;)
+
+return &#123;scrollX,scrollY&#125;
+</code></pre>
+<p>   }<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">16. useMousePostion</span><br><span class="line">    1.    ```js</span><br><span class="line">         1.  //对之前的counter逻辑进行抽取</span><br><span class="line">       </span><br><span class="line">       import &#123;ref&#125; from &#x27;vue&#x27;</span><br><span class="line">       export function useScrollPostion()&#123;</span><br><span class="line">         const mouseX =ref(0)</span><br><span class="line">         const mouseY =ref(0)</span><br><span class="line"></span><br><span class="line">        document.addEventListener(&quot;scroll&quot;,()=&gt;&#123;</span><br><span class="line">         mouseX.value=window.mouseX</span><br><span class="line">         mouseY.value=window.mouseY</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        return &#123;mouseX,mouseY&#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>useLocalStorage</p>
+<ol>
+<li><pre><code>```js
+</code></pre>
+<ol>
+<li>&#x2F;&#x2F;对之前的counter逻辑进行抽取</li>
+</ol>
+<p>import {ref,watch} from ‘vue’<br>export function useLocalStorage(key,defaultValue){<br> const data&#x3D;ref(defaultValue)</p>
+<p>if (defaultValue) {<br>  window.localStorage.setItem(key,JSON.stringify(defaultValue))<br>}else{<br>  data.value&#x3D;JSON.stringify(window.localStorage.getItem(key)<br>}<br>watch(data,()&#x3D;&gt;{<br>  window.localStorage.setItem(key,JSON.stringify(data.value))<br>})</p>
+<p> return  data<br>}<br>&#96;&#96;&#96;</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>an31742</li>
+    <li><strong>本文链接：</strong><a href="https://an31742.github.io/2022/07/19/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bvue3CompotinsApi/index.html" title="https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;19&#x2F;%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bvue3CompotinsApi&#x2F;index.html">https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;19&#x2F;%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bvue3CompotinsApi&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue3/" rel="tag">vue3</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2022/07/19/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bvuecli%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/"><i class="iconfont iconleft"></i>前端学习之vuecli项目搭建</a>
+    <a href="/2022/07/07/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bwebpack%E9%85%8D%E7%BD%AE/">前端学习之webpack配置<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Compositions-Api"><span class="toc-text">Compositions-Api</span></a></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=1139564521 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/an31742 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:a13113586407@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
