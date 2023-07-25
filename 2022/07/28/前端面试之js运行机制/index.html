@@ -1,0 +1,469 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端面试之js运行机制 - 偶像崇拜</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="JS 运行机制
+浏览器和node.js支持js启动进程...">
+  <meta name="author" content="an31742">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">前端面试之js运行机制</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">前端面试之js运行机制</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 28, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3651</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <h1 id="JS-运行机制"><a href="#JS-运行机制" class="headerlink" title="JS 运行机制"></a>JS 运行机制</h1><ul>
+<li>浏览器和node.js支持js启动进程 webworker</li>
+<li>js和dom渲染共用一个线程，因为js可以修改Dom结构</li>
+<li>js异步要基于回调来实现</li>
+</ul>
+<p><strong>异步任务（setTimeout ajax）使用回调函数  基于event loop</strong><br><strong>dom事件(dom事件不是异步)使用回调函数 基于event loop</strong></p>
+<h3 id="js如何执行的"><a href="#js如何执行的" class="headerlink" title="js如何执行的"></a>js如何执行的</h3><ul>
+<li>从前到后一行一行的执行</li>
+<li>如果某一行执行报错，则停止下面的代码执行</li>
+<li>先把同步代码执行完，再执行异步的代码<h3 id="如何理解单线程"><a href="#如何理解单线程" class="headerlink" title="如何理解单线程"></a>如何理解单线程</h3></li>
+<li>JS是单线程，同一时间只能做一件事</li>
+<li>异步。node叫非阻塞IO。</li>
+</ul>
+<h3 id="什么是任务队列"><a href="#什么是任务队列" class="headerlink" title="什么是任务队列"></a>什么是任务队列</h3><ul>
+<li>事件队列：任务队列。分为同步任务、异步任务。加载完JS，整个线程优先处理同步任务，再处理异步任务。无论你的同步有多少，异步多及时。都是这样。也有同步队列，和异步队列。</li>
+<li>node叫事件环机制，就是我理解的事件调度中心，优先处理先来用户的请求。</li>
+<li>同步任务，或者异步返回一个无限循环，后面的任务都会被阻塞。</li>
+<li>JS有个timer模块，遇到time函数，会记住函数的执行时机开始倒计时，到了该执行的时间后，才把函数插入异步队列。</li>
+</ul>
+<h3 id="什么是Event-loop-事件循环-事件轮询"><a href="#什么是Event-loop-事件循环-事件轮询" class="headerlink" title="什么是Event loop 事件循环 事件轮询"></a>什么是Event loop 事件循环 事件轮询</h3><p>原理：eventloop 是异步回调机制的实现原理</p>
+<p>【实现机制】：</p>
+<ul>
+<li><p>遇到同步代码一行一行放到callStack里面执行</p>
+</li>
+<li><p>遇到异步会先记录下，等待时机执行异步事件的时间结束 会将异步事件放到callback queue</p>
+</li>
+<li><p>callstack为空的时候，(同步代码全部执行完) eventloop机制开始工作</p>
+</li>
+<li><p>事件轮询查找callback queue，是否有可执行事件移动到call Stack里面执行</p>
+</li>
+<li><p>如果没有继续查找</p>
+</li>
+<li><p>【同步队列】，执行完成时，i&#x3D;4,然后异步队列没有函数，timer等待时间到达，就是把函数推入异步队列，再等待一个【事件循环】的东西，再开始执行异步队列，所有是4个4.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0; i &lt; 4; i++) &#123;</span><br><span class="line">  setTimeout(function () &#123;</span><br><span class="line">    console.log(i);  // 4*4</span><br><span class="line">  &#125;,0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>【事件循环】：先把【同步队列】的函数放【运行栈】上执行，执行完成，有个【东西】就去看【异步队列】上有没有函数，timer模块把到时间的函数，放入【异步队列】，这个【东西】就会把【异步队列】的函数拿到运行栈上执行，执行完成后，再次重复前面的过程。这个【东西】和返回查看同步队列和异步的过程，叫事件循环。</p>
+</li>
+</ul>
+<h3 id="异步任务"><a href="#异步任务" class="headerlink" title="异步任务"></a>异步任务</h3><ul>
+<li>SetTimeout&#x2F;setinterval</li>
+<li>DOM的事件：浏览器有单独模块去接受这个函数，GUI监听用户点击某个按钮触发函数的时候，这个模块就会把这个函数推到【异步队列】中，【事件循环】会监测、拿走、执行这个函数。</li>
+<li>ES6中的promise。</li>
+</ul>
+<hr>
+<h1 id="宏任务、微任务"><a href="#宏任务、微任务" class="headerlink" title="宏任务、微任务"></a>宏任务、微任务</h1><p>微任务要优先红任务执行</p>
+<ul>
+<li><p>先看代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">console.log(&#x27;script start&#x27;);</span><br><span class="line"></span><br><span class="line">setTimeout(function() &#123;</span><br><span class="line">  console.log(&#x27;setTimeout&#x27;);</span><br><span class="line">&#125;, 0);</span><br><span class="line"></span><br><span class="line">Promise.resolve().then(function() &#123;</span><br><span class="line">  console.log(&#x27;promise1&#x27;);</span><br><span class="line">&#125;).then(function() &#123;</span><br><span class="line">  console.log(&#x27;promise2&#x27;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(&#x27;script end&#x27;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>正确答案是：script start, script end, promise1, promise2, setTimeout</p>
+</li>
+<li><p>每个线程都会有它自己的event loop(事件循环)，所以都能独立运行。然而所有同源窗口会共享一个event loop以同步通信。event loop会一直运行，来执行进入队列的宏任务。一个event loop有多种的宏任务源（译者注：event等等），这些宏任务源保证了在本任务源内的顺序。但是浏览器每次都会选择一个源中的一个宏任务去执行。这保证了浏览器给与一些宏任务（如用户输入）以更高的优先级。</p>
+</li>
+</ul>
+<h3 id="宏任务（task）"><a href="#宏任务（task）" class="headerlink" title="宏任务（task）"></a>宏任务（task）</h3><ul>
+<li>浏览器为了能够使得JS内部task与DOM任务能够有序的执行，会在一个task执行结束后，在下一个 task 执行开始前，对页面进行重新渲染 </li>
+<li>task-&gt;渲染-&gt;task-&gt;…</li>
+<li>鼠标点击会触发一个事件回调，需要执行一个宏任务，然后解析HTMl。</li>
+<li>setTimeout的作用是等待给定的时间后为它的回调产生一个新的宏任务。这就是为什么打印‘setTimeout’在‘script end’之后。</li>
+<li>因为打印script end是第一个宏任务里面的事情，而‘setTimeout’是另一个独立的任务里面打印的。</li>
+<li>setTimeout setInterval ajax Dom事件</li>
+</ul>
+<h3 id="微任务（Microtasks-）"><a href="#微任务（Microtasks-）" class="headerlink" title="微任务（Microtasks ）"></a>微任务（Microtasks ）</h3><ul>
+<li><p>promise async和await</p>
+</li>
+<li><p>微任务通常来说就是需要在当前 task 执行结束后立即执行的任务，比如对一系列动作做出反馈，或者是需要异步的执行任务而又不需要分配一个新的 task，这样便可以减小一点性能的开销。</p>
+</li>
+<li><p>只要执行栈中没有其他的js代码正在执行且每个宏任务执行完，微任务队列会立即执行。</p>
+</li>
+<li><p>如果在微任务执行期间微任务队列加入了新的微任务，会将新的微任务加入队列尾部，之后也会被执行。</p>
+</li>
+<li><p>微任务包括了mutation observe的回调还有接下来的例子promise的回调。</p>
+</li>
+<li><p>一旦一个pormise有了结果，或者早已有了结果（有了结果是指这个promise到了fulfilled或rejected状态），他就会为它的回调产生一个微任务，这就保证了回调异步的执行即使这个promise早已有了结果。</p>
+</li>
+<li><p>所以对一个已经有了结果的promise调用.then(yey, nay)会立即产生一个微任务。这就是为什么‘promise1’,’promise2’会打印在‘script end’之后，</p>
+</li>
+<li><p>因为所有微任务执行的时候，当前执行栈的代码必须已经执行完毕。‘promise1’,’promise2’会打印在‘setTimeout’之前是因为所有微任务总会在下一个宏任务之前全部执行完毕。</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// Let&#x27;s get hold of those elements</span><br><span class="line">var outer = document.querySelector(&#x27;.outer&#x27;);</span><br><span class="line">var inner = document.querySelector(&#x27;.inner&#x27;);</span><br><span class="line"></span><br><span class="line">// Let&#x27;s listen for attribute changes on the</span><br><span class="line">// outer element</span><br><span class="line">//监听element属性变化</span><br><span class="line">new MutationObserver(function() &#123;</span><br><span class="line">  console.log(&#x27;mutate&#x27;);</span><br><span class="line">&#125;).observe(outer, &#123;</span><br><span class="line">  attributes: true</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// Here&#x27;s a click listener…</span><br><span class="line">function onClick() &#123;</span><br><span class="line">  console.log(&#x27;click&#x27;);</span><br><span class="line"></span><br><span class="line">  setTimeout(function() &#123;</span><br><span class="line">    console.log(&#x27;timeout&#x27;);</span><br><span class="line">  &#125;, 0);</span><br><span class="line"></span><br><span class="line">  Promise.resolve().then(function() &#123;</span><br><span class="line">    console.log(&#x27;promise&#x27;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  outer.setAttribute(&#x27;data-random&#x27;, Math.random());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// …which we&#x27;ll attach to both elements</span><br><span class="line">inner.addEventListener(&#x27;click&#x27;, onClick);</span><br><span class="line">outer.addEventListener(&#x27;click&#x27;, onClick);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>谷歌<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">click</span><br><span class="line">promise</span><br><span class="line">mutate</span><br><span class="line">click</span><br><span class="line">promise</span><br><span class="line">mutate</span><br><span class="line">timeout</span><br><span class="line">timeout</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>an31742</li>
+    <li><strong>本文链接：</strong><a href="https://an31742.github.io/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8Bjs%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/index.html" title="https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;28&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8Bjs%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6&#x2F;index.html">https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;28&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8Bjs%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/" rel="tag">前端面试</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"><i class="iconfont iconleft"></i>前端面试之性能优化</a>
+    <a href="/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8Bhtml-css-render/">前端面试之html-css_render<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JS-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="toc-text">JS 运行机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#js%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84"><span class="toc-text">js如何执行的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E5%8D%95%E7%BA%BF%E7%A8%8B"><span class="toc-text">如何理解单线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97"><span class="toc-text">什么是任务队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFEvent-loop-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF-%E4%BA%8B%E4%BB%B6%E8%BD%AE%E8%AF%A2"><span class="toc-text">什么是Event loop 事件循环 事件轮询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1"><span class="toc-text">异步任务</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%8F%E4%BB%BB%E5%8A%A1%E3%80%81%E5%BE%AE%E4%BB%BB%E5%8A%A1"><span class="toc-text">宏任务、微任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8F%E4%BB%BB%E5%8A%A1%EF%BC%88task%EF%BC%89"><span class="toc-text">宏任务（task）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E4%BB%BB%E5%8A%A1%EF%BC%88Microtasks-%EF%BC%89"><span class="toc-text">微任务（Microtasks ）</span></a></li></ol></li></ol></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

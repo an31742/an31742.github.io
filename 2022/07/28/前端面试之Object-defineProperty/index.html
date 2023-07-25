@@ -1,0 +1,409 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端面试之Object.defineProperty - 偶像崇拜</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="Object.defineProperty
+Objec...">
+  <meta name="author" content="an31742">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">前端面试之Object.defineProperty</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">前端面试之Object.defineProperty</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 28, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>6011</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <h3 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h3><ul>
+<li><p>Object.defineProperty(obj, prop, descriptor)用来给对象定义属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">【数据属性】</span><br><span class="line">数据属性有4个描述内部属性的特性</span><br><span class="line">Configurable:是否可以删除、能否修改属性的特性。</span><br><span class="line">Enumerable：是否可枚举；即是否通过for-in循环或Object.keys()返回属性</span><br><span class="line">Writable：能否修改属性的值</span><br><span class="line">Value:该属性对应的值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">【访问器属性】</span><br><span class="line">Configurable：同上</span><br><span class="line">Enumerable：同上</span><br><span class="line">Set:一个给属性提供 setter 的方法(给对象属性设置值时调用的函数)，如果没有 setter 则为 undefined。</span><br><span class="line">Get:一个给属性提供 getter 的方法(访问对象属性时调用的函数,返回值就是当前属性的值)，</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建&#x2F;修改&#x2F;获取属性的方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">【Object.defineProperty()】</span><br><span class="line">方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 函数执行完后返回这个对象。</span><br><span class="line"></span><br><span class="line">var obj = new Object();</span><br><span class="line">Object.defineProperty(obj, &#x27;name&#x27;, &#123;</span><br><span class="line">    configurable: false,</span><br><span class="line">    enumerable: true,</span><br><span class="line">    writable: true,</span><br><span class="line">    value: &#x27;张三&#x27;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">【Object.defineProperties()】</span><br><span class="line">方法直接在一个对象上定义一个或多个新的属性或修改现有属性，并返回该对象。</span><br><span class="line"></span><br><span class="line">var obj = new Object();</span><br><span class="line">Object.defineProperties(obj, &#123;</span><br><span class="line">    name: &#123;</span><br><span class="line">        value: &#x27;张三&#x27;,</span><br><span class="line">        configurable: false,</span><br><span class="line">        writable: true,</span><br><span class="line">        enumerable: true</span><br><span class="line">    &#125;,</span><br><span class="line">    age: &#123;</span><br><span class="line">        value: 18,</span><br><span class="line">        configurable: true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">【Object.getOwnPropertyDescriptor()】</span><br><span class="line">该方法返回指定对象上一个自有属性对应的属性描述符。</span><br><span class="line">var obj = new Object();</span><br><span class="line">Object.defineProperty(obj, &#x27;name&#x27;, &#123;</span><br><span class="line">  configurable: false, // 不可修改数据属性</span><br><span class="line">  enumerable: true,</span><br><span class="line">  writable: true,</span><br><span class="line">  value: &#x27;张三&#x27;</span><br><span class="line">&#125;)</span><br><span class="line">console.log(obj.name) //张三</span><br><span class="line"></span><br><span class="line">var desc = Object.getOwnPropertyDescriptor(obj, &#x27;name&#x27;);</span><br><span class="line">// 修改</span><br><span class="line">desc.enumerable=false;</span><br><span class="line">console.log(desc);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var desc_1 = Object.getOwnPropertyDescriptor(obj, &#x27;name&#x27;);</span><br><span class="line">console.log(desc_1); // 再次获取，打印没有修改</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">【Object. getOwnPropertyDescriptors()】</span><br><span class="line">所指定对象的所有自身属性的描述符，如果没有任何自身属性，则返回空对象。</span><br><span class="line">var person = &#123;</span><br><span class="line">    name: &#x27;张三&#x27;,</span><br><span class="line">    age: 18</span><br><span class="line">&#125;</span><br><span class="line">var desc = Object.getOwnPropertyDescriptors(person);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>各种场景下,数据属性的的扩展示例讲解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">【configrubale】如果设置configrubale属性为false，则不可使用delete操作符(在严格模式下抛出错误), 不能再次修改所有内部属性值</span><br><span class="line"></span><br><span class="line">var person = &#123;&#125;;</span><br><span class="line">Object.defineProperty(person, &#x27;name&#x27;, &#123;</span><br><span class="line">    configurable: false,</span><br><span class="line">    value: &#x27;John&#x27;</span><br><span class="line">&#125;) ;</span><br><span class="line"></span><br><span class="line">// 严格模式下抛出错误</span><br><span class="line">delete person.name   </span><br><span class="line">// &#x27;John&#x27;  没有删除</span><br><span class="line">console.log(person.name) </span><br><span class="line"></span><br><span class="line">Object.defineProperty(person, &#x27;name&#x27;, &#123;</span><br><span class="line">    configurable: true  //报错</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">【访问器属性】</span><br><span class="line">设置属性，注意需要外面来个变量来设置 obj属性被设置后的值，用于obj.a获取的时候返回；</span><br><span class="line"></span><br><span class="line">var obj = &#123;&#125;;</span><br><span class="line">var aValue; </span><br><span class="line">Object.defineProperty(obj, &#x27;a&#x27;, &#123;</span><br><span class="line">  configurable: true,</span><br><span class="line">  enumerable: true,</span><br><span class="line">  get: function() &#123;</span><br><span class="line">    console.log(&quot;a被获取了&quot;)</span><br><span class="line">    return aValue;</span><br><span class="line">  &#125;,</span><br><span class="line">  set: function(newValue) &#123;</span><br><span class="line">    console.log(&quot;a被设置了&quot;)</span><br><span class="line">    aValue = newValue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">obj.a //获取</span><br><span class="line">obj.a=1 //设置</span><br><span class="line">console.log(obj.a);  //获取</span><br></pre></td></tr></table></figure>
+
+<h3 id="var-a-x3D-1-为什么不可以被删除？-a-x3D-1可以被删除？"><a href="#var-a-x3D-1-为什么不可以被删除？-a-x3D-1可以被删除？" class="headerlink" title="var a&#x3D;1 为什么不可以被删除？ a&#x3D;1可以被删除？"></a>var a&#x3D;1 为什么不可以被删除？ a&#x3D;1可以被删除？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">【全局定义变量】</span><br><span class="line">var a = 1; // a属于window, 相当于window.a</span><br><span class="line">var d = Object.getOwnPropertyDescriptor(window, &#x27;a&#x27;);</span><br><span class="line">// &#123;</span><br><span class="line">//     configurable: false,</span><br><span class="line">//     value: 1,</span><br><span class="line">//     writable: true,</span><br><span class="line">//     enumerable: true</span><br><span class="line">// &#125;</span><br><span class="line"></span><br><span class="line">a = 1; //a相当于window的一个属性, window.a</span><br><span class="line">var d = Object.getOwnPropertyDescriptor(window, &#x27;a&#x27;);</span><br><span class="line">// &#123;</span><br><span class="line">//     configurable: true,   // 此时configurable属性值为true</span><br><span class="line">//     value: 1,</span><br><span class="line">//     writable: true,</span><br><span class="line">//     enumerable: true</span><br><span class="line">// &#125;</span><br><span class="line">注意：只有使用var, let等操作符才是定义变量，而不使用var，直接a=1;,这样a的含义为window的一个属性，并不是我们所说的变量的概念。使用 var定义的任何变量，其configurable属性值都为false,定义对象也是一样</span><br><span class="line"></span><br><span class="line">var b = &#123;</span><br><span class="line">    name: &#x27;bbb&#x27;</span><br><span class="line">&#125;</span><br><span class="line">var d = Object.getOwnPropertyDescriptor(window, &#x27;b&#x27;);</span><br><span class="line">console.log(d)</span><br><span class="line">// &#123;</span><br><span class="line">//     configurable: false</span><br><span class="line">//     value: 1,</span><br><span class="line">//     writable: true,</span><br><span class="line">//     enumerable: true</span><br><span class="line">// &#125;</span><br><span class="line"></span><br><span class="line">var b = &#123;</span><br><span class="line">    name: &#x27;bbb&#x27;</span><br><span class="line">&#125;</span><br><span class="line">var d = Object.getOwnPropertyDescriptor(b, &#x27;name&#x27;);</span><br><span class="line">console.log(d)</span><br><span class="line">// &#123;</span><br><span class="line">//     configurable: true</span><br><span class="line">//     writable: true,</span><br><span class="line">//     enumerable: true</span><br><span class="line">//     value: &#x27;bbb&#x27;</span><br><span class="line">// &#125;</span><br><span class="line">使用字面量定义的对象,该对象内部的属性的数据描述符configurable属性都为true</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">【Writable】当writable为false(并且configrubale为true),[[value]]可以通过defineeProperty修改, 但不能直接赋值修改</span><br></pre></td></tr></table></figure>
+
+<h3 id="简单的数据双向绑定"><a href="#简单的数据双向绑定" class="headerlink" title="简单的数据双向绑定"></a>简单的数据双向绑定</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"> &lt;div class=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">      input1=&gt;</span><br><span class="line">      &lt;input type=&quot;text&quot; id=&quot;input1&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">      input2=&gt;</span><br><span class="line">      &lt;input type=&quot;text&quot; id=&quot;input2&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      我每次比input2的值加1=&gt;</span><br><span class="line">      &lt;span id=&quot;span&quot;&gt;&lt;/span&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">var DOM_1 = document.getElementById(&#x27;input1&#x27;);</span><br><span class="line">var DOM_2 = document.getElementById(&#x27;input2&#x27;);</span><br><span class="line">var oSpan = document.getElementById(&#x27;span&#x27;);</span><br><span class="line">var obj = &#123;&#125;;</span><br><span class="line">Object.defineProperties(obj, &#123;</span><br><span class="line">  val1: &#123;</span><br><span class="line">    configurable: true,</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      DOM_1.value = 0;</span><br><span class="line">      DOM_2.value = 0;</span><br><span class="line">      oSpan.innerHTML = 0;</span><br><span class="line">      return 0</span><br><span class="line">    &#125;,</span><br><span class="line">    set: function(newValue) &#123;</span><br><span class="line">      【核心】在这，就是被设置的时候，通知所有相关的DOM进行数据更改；</span><br><span class="line">      DOM_2.value = newValue;</span><br><span class="line">      oSpan.innerHTML = Number(newValue) ? Number(newValue) : 0</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  val2: &#123;</span><br><span class="line">    configurable: true,</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      DOM_1.value = 0;</span><br><span class="line">      DOM_2.value = 0;</span><br><span class="line">      oSpan.innerHTML = 0;</span><br><span class="line">      return 0</span><br><span class="line">    &#125;,</span><br><span class="line">    set: function(newValue) &#123;</span><br><span class="line">      </span><br><span class="line">      DOM_1.value = newValue;</span><br><span class="line">      oSpan.innerHTML = Number(newValue) + 1;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">DOM_1.value = obj.val1;</span><br><span class="line"></span><br><span class="line">DOM_1.addEventListener(&#x27;keyup&#x27;, function() &#123;</span><br><span class="line">  obj.val1 = DOM_1.value;</span><br><span class="line">&#125;, false)</span><br><span class="line">DOM_2.addEventListener(&#x27;keyup&#x27;, function() &#123;</span><br><span class="line">  obj.val2 = DOM_2.value;</span><br><span class="line">&#125;, false)</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例-propertyIsEnumerable-“key”"><a href="#实例-propertyIsEnumerable-“key”" class="headerlink" title="实例.propertyIsEnumerable(“key”)"></a>实例.propertyIsEnumerable(“key”)</h3><ul>
+<li>用来检测实例化对象上的某一属性是否可遍历，也就是能不能用for..in、forEach&#x2F;map&#x2F;filter循环来取到.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var obj = new Object();</span><br><span class="line">Object.defineProperty(obj, &#x27;name&#x27;, &#123;</span><br><span class="line">  configurable: false,</span><br><span class="line">  enumerable: false,</span><br><span class="line">  writable: true,</span><br><span class="line">  value: &#x27;张三&#x27;</span><br><span class="line">&#125;);</span><br><span class="line">obj.propertyIsEnumerable(&quot;name&quot;))</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="实例-hasOwnProperty-“key”"><a href="#实例-hasOwnProperty-“key”" class="headerlink" title="实例.hasOwnProperty(“key”)"></a>实例.hasOwnProperty(“key”)</h3><ul>
+<li>用于检查某一属性是不是挂载于实例化的对象上，来自父亲继承的属性为false；<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function FN (argument) &#123;</span><br><span class="line">  this.a = 1;</span><br><span class="line">&#125;</span><br><span class="line">FN.prototype=&#123;</span><br><span class="line">  b:1</span><br><span class="line">&#125;;</span><br><span class="line">var fn = new FN();</span><br><span class="line"></span><br><span class="line">console.log(fn.hasOwnProperty(&quot;a&quot;)); //ture</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>an31742</li>
+    <li><strong>本文链接：</strong><a href="https://an31742.github.io/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8BObject-defineProperty/index.html" title="https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;28&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8BObject-defineProperty&#x2F;index.html">https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;28&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8BObject-defineProperty&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/" rel="tag">前端面试</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E7%BC%93%E5%AD%98/"><i class="iconfont iconleft"></i>前端面试之缓存</a>
+    <a href="/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2/">前端面试之字符串<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-defineProperty"><span class="toc-text">Object.defineProperty</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#var-a-x3D-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%8F%AF%E4%BB%A5%E8%A2%AB%E5%88%A0%E9%99%A4%EF%BC%9F-a-x3D-1%E5%8F%AF%E4%BB%A5%E8%A2%AB%E5%88%A0%E9%99%A4%EF%BC%9F"><span class="toc-text">var a&#x3D;1 为什么不可以被删除？ a&#x3D;1可以被删除？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A"><span class="toc-text">简单的数据双向绑定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-propertyIsEnumerable-%E2%80%9Ckey%E2%80%9D"><span class="toc-text">实例.propertyIsEnumerable(“key”)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-hasOwnProperty-%E2%80%9Ckey%E2%80%9D"><span class="toc-text">实例.hasOwnProperty(“key”)</span></a></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

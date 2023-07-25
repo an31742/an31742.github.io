@@ -1,0 +1,506 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端面试之性能优化 - 偶像崇拜</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="页面性能类性能优化的原则
+多使用内存缓存或其他方法
+减...">
+  <meta name="author" content="an31742">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">前端面试之性能优化</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">前端面试之性能优化</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 28, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4841</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <h1 id="页面性能类"><a href="#页面性能类" class="headerlink" title="页面性能类"></a>页面性能类</h1><h2 id="性能优化的原则"><a href="#性能优化的原则" class="headerlink" title="性能优化的原则"></a>性能优化的原则</h2><ul>
+<li>多使用内存缓存或其他方法</li>
+<li>减少cpu计算量，减少网络加载耗时</li>
+<li>适用所有编程的性能优化   空间换时间</li>
+</ul>
+<h3 id="加载更快"><a href="#加载更快" class="headerlink" title="加载更快"></a>加载更快</h3><ul>
+<li>减少资源体积：压缩代码，gzip压缩</li>
+<li>减少访问次数：合并代码，ssr服务段渲染，缓存 静态资源增加。资源合并 </li>
+<li>适用更快的网络：CDN加速</li>
+</ul>
+<h3 id="渲染更快"><a href="#渲染更快" class="headerlink" title="渲染更快"></a>渲染更快</h3><ul>
+<li>css放到head，js放到body下面</li>
+<li>尽早开始执行js，用DOMContentloaded触发</li>
+<li>懒加载图片，路由懒加载</li>
+<li>对DOM查询进行缓存，频繁DOM操作合并到一起插入DOM结构</li>
+<li>节流和防抖</li>
+</ul>
+<h2 id="提升页面性能的方法有哪些？"><a href="#提升页面性能的方法有哪些？" class="headerlink" title="提升页面性能的方法有哪些？"></a>提升页面性能的方法有哪些？</h2><ul>
+<li><p>1.资源要压缩合并，减少HTTP请求。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CSS：外网地址，就涉及到域名解析的过程；</span><br><span class="line">JS：就涉及到脚本的同步加载还是异步加载，同时影响页面的DOM tree/CSSOM 树的渲染；</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.非核心代码使用异步加载，异步加载的方式，区别。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">【方式】</span><br><span class="line">1.动态异步脚本。页面动态添加script标签。</span><br><span class="line">2.defer</span><br><span class="line">3.async</span><br><span class="line"></span><br><span class="line">【区别】</span><br><span class="line">1.defer:都是异步加载，在HTML解析完成后执行，有多个JS的话，按顺序进行执行。</span><br><span class="line">2.async:都是异步加载，加载完成后就开始执行，和执行顺序和加载顺序都没有关系。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>【defer】:head标签内有defer异步加载的JS，可以看到body内的HTML解析完成后（包括DOM树怎么渲染，同步的脚本下载完成后的执行后），才执行异步的脚本。</p>
+</li>
+<li><p>但是异步的脚本其实早就开始下载了。</p>
+</li>
+<li><p>使用：就是所有的脚本都可以写defer异步加载的方式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;script src=&quot;./test_derfer_1.js&quot; type=&quot;text/javascript&quot; defer&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script src=&quot;./test_derfer_2.js&quot; type=&quot;text/javascript&quot; defer&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div class=&quot;app&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;box&quot; id=&quot;box&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;script src=&quot;./index.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">------------------------</span><br><span class="line">1</span><br><span class="line">df_1</span><br><span class="line">df_2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>【async】：head头部放入async异步加载的JS，async_1.js较大，可以看到输出的结果就是异步加载的脚本，只要它下载完成，就要开始执行脚本</p>
+</li>
+<li><p>不管你DOM树有没有渲染好或你同步的JS有没有执行的。</p>
+</li>
+<li><p>使用：单独的JS的内容，不依赖其他文件的JS。可以让它下载后执行。</p>
+</li>
+<li><p>3.浏览器缓存，缓存的分类，和原理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">【强缓存】：在一定时间内，不直接请求，拿过来就用。</span><br><span class="line">Expires : 服务端端的绝对过期时间，有可能客户端时间和浏览器不一样。</span><br><span class="line">Cache-Control:max-age = 3600 ：相对时间，3600秒内不会向服务器拿这个文件，以这个为主。</span><br><span class="line"></span><br><span class="line">【协商缓存】：强缓超出过期时间，浏览器有这个副本，不确定能不能用，需要请求下，返回的状态码是304</span><br><span class="line">1.Last-Modified 上次服务器带的这个时间。</span><br><span class="line">2.下次浏览器请求时，会用这个if Modified-Since字段，</span><br><span class="line">把Last-Modified字段的val时间传给服务器。</span><br><span class="line">3.问能不能我们这个副本能不能用。</span><br><span class="line"></span><br><span class="line">if-None-Match:把上次Etag的hash值作为该字段的值，传回去，就知道哪次副本的版本还能不能用。</span><br><span class="line">一些文件也许会周期性的更改，但是他的内容并不改变(仅仅改变的修改时间)，这个时候我们并不希望客户端认为这个文件被修改了，而重新GET;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">不带缓存的请求：</span><br><span class="line">【Request：】</span><br><span class="line">GET /i/yahoo/gif HTTP 1.1</span><br><span class="line">Host: us.yimg.com</span><br><span class="line">【Response:】</span><br><span class="line">HTTP 1.1 200 OK</span><br><span class="line">Last-Modified:Tue,12 Dec 200603:03:59 GMT</span><br><span class="line">ETag:”10c24bc-4ab-457elc1f“</span><br><span class="line"></span><br><span class="line">再次请求相同组件:</span><br><span class="line">【Request】</span><br><span class="line">GET /i/yahoo/gif HTTP 1.1</span><br><span class="line">Host: us.yimg.com</span><br><span class="line">If-Modified-Since:Tue,12 Dec 200603:03:59 GMT</span><br><span class="line">If-None-Match:”10c24bc-4ab-457elc1f“</span><br><span class="line">【Response】</span><br><span class="line">HTTP 1.1 304 Not Midified</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><p>4.CDN加速 根据地方不同加载的服务不同静态资源</p>
+</li>
+<li><p>5.预解析DNS：DNS Prefetching是具有此属性的域名不需要用户点击链接就在后台解析，而域名解析和内容载入是串行的网络操作，所以这个方式能减少用户的等待时间，提升用户体验。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 用meta信息来告知浏览器, 当前页面要做DNS预解析:</span><br><span class="line">&lt;meta http-equiv=&quot;x-dns-prefetch-control&quot; content=&quot;on&quot; /&gt;</span><br><span class="line">2. 在页面header中使用link标签来强制对DNS预解析: </span><br><span class="line">&lt;link rel=&quot;dns-prefetch&quot; href=&quot;http://bdimg.share.baidu.com&quot; /&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>6.缓存AJAX：GET的请求，是可以（而且默认）在客户端进行缓存的，除非指定了不同的地址，否则同一个地址的AJAX请求，不会重复在服务器执行，而是返回304。</p>
+</li>
+<li><p>7.精简混淆JavaScript，精简CSS</p>
+</li>
+<li><p>8.动画要使用CSS3的translate，不会引起浏览器的重绘和重排，这就相当nice了。这点就很牛逼了。页面不会Repaint（没有重新计算render tree）</p>
+</li>
+<li><p>9.静态资源要使用hash后缀根据文件内容计算hash后缀.文件内容不变，则hash不变则url不变.url和文件不变<br>会自动触发缓存</p>
+</li>
+<li><p>10.服务端渲染 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssr将网页和数据一起加载一起渲染。 </span><br><span class="line"></span><br><span class="line">前后端分离：先加载再加载数据，再渲染数据</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>11.懒加载  并非一下子全部加载随着用户不断操作并不断加载</p>
+</li>
+<li><p>12.查询DOM缓存</p>
+</li>
+</ul>
+<h2 id="页面渲染优化"><a href="#页面渲染优化" class="headerlink" title="页面渲染优化"></a>页面渲染优化</h2><ul>
+<li><p>1.HTML文档结构层次尽量少，最好不深于六层；</p>
+</li>
+<li><p>2.脚本尽量后放，样式放在前即可；</p>
+</li>
+<li><p>3.少量首屏样式内联放在标签内；</p>
+</li>
+<li><p>4.样式结构层次尽量简单；</p>
+</li>
+<li><p>5.在脚本中尽量减少DOM操作，尽量缓存访问DOM的样式信息，避免过度触发回流；</p>
+</li>
+<li><p>6.减少通过JavaScript代码修改元素样式，尽量使用修改class名方式操作样式或动画；</p>
+</li>
+<li><p>7.动画尽量使用在绝对定位或固定定位的元素上；</p>
+</li>
+<li><p>8.隐藏在屏幕外，或在页面滚动时，尽量停止动画；</p>
+</li>
+<li><p>9.尽量缓存DOM查找，查找器尽量简洁；</p>
+</li>
+<li><p>10.涉及多域名的网站，可以开启域名预解析</p>
+</li>
+<li><p>11.尽早开始js执行</p>
+</li>
+<li><p>新增的点：2019-11-1</p>
+<ul>
+<li>避免使用字符串拼接，尤其的DOM操作里的字符串拼接，字符串的不可变性；</li>
+<li>面向对象写代码，避免出现闭包；使用bind改变指向；</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">add</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// var me = this;  这样会出现闭包，内存不会进行回收</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// bind改变指向，只是改变指向，但函数会绑定DOM节点上；</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">add_btn</span>.<span class="property">onclick</span> = (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    </span><br><span class="line">  &#125;).<span class="title function_">bind</span>(<span class="variable language_">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>原公司代码实时数据代码优化：以前在公司这样写代码：</p>
+<ul>
+<li>调用<code>this.add();</code>：内部会产生闭包；</li>
+</ul>
+<p><img    class="lazyload" data-original="C:/Users/lenovo/Desktop/imgs/1574503459685.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="   ><span class="image-caption">1574503459685</span> </p>
+<ul>
+<li>调用<code>this.render()</code>：内部会产生闭包；最恶心的是递归执行一次就会产生一次闭包；执行多次后页面就卡顿！！</li>
+</ul>
+<p><img    class="lazyload" data-original="/imgs/1574503845456.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="   ><span class="image-caption">1574503845456</span>    </p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">function FN(id) &#123;</span><br><span class="line">    this.box = document.querySelector(id);</span><br><span class="line">    this.data = [&quot;测试数据&quot;];</span><br><span class="line">    this.add();</span><br><span class="line">    this.render();</span><br><span class="line">  &#125;</span><br><span class="line">  FN.prototype = &#123;</span><br><span class="line">    add: function() &#123;</span><br><span class="line">      var me = this;</span><br><span class="line">      me.box.onclick = function() &#123;</span><br><span class="line">        console.log(me.data);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    render: function() &#123;</span><br><span class="line">      var me = this;</span><br><span class="line">      // 获取数据：</span><br><span class="line">      var arr = [1, 2, 3];</span><br><span class="line">      arr.forEach(function(item, index, arr) &#123;</span><br><span class="line">        console.log(item);</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      setTimeout(function() &#123;</span><br><span class="line">        me.render();</span><br><span class="line">      &#125;, 1000);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  new FN();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改this,避免闭包；</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">FN</span>(<span class="params">id</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">box</span> = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(id);</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">data</span> = [<span class="string">&quot;测试数据&quot;</span>];</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">render</span>();</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">add</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable constant_">FN</span>.<span class="property"><span class="keyword">prototype</span></span> = &#123;</span><br><span class="line">  <span class="attr">add</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// var me = this;</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">box</span>.<span class="property">onclick</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">data</span>);</span><br><span class="line">    &#125;.<span class="title function_">bind</span>(<span class="variable language_">this</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">render</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// var me = this;</span></span><br><span class="line">    <span class="comment">// 获取数据：</span></span><br><span class="line">    <span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">    arr.<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">item, index, arr</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(item);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">render</span>();</span><br><span class="line">    &#125;.<span class="title function_">bind</span>(<span class="variable language_">this</span>), <span class="number">1000</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title function_">FN</span>();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>改变this指向，不会产生闭包:</li>
+</ul>
+<p><img    class="lazyload" data-original="/imgs/1574504038912.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="   ><span class="image-caption">1574504038912</span> </p>
+<p><img    class="lazyload" data-original="/imgs/1574504064357.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="   ><span class="image-caption">1574504064357</span> </p>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>an31742</li>
+    <li><strong>本文链接：</strong><a href="https://an31742.github.io/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/index.html" title="https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;28&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96&#x2F;index.html">https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;28&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/" rel="tag">前端面试</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E9%94%99%E8%AF%AF%E6%8D%95%E8%8E%B7/"><i class="iconfont iconleft"></i>前端面试之错误捕获</a>
+    <a href="/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8Bjs%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/">前端面试之js运行机制<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E7%B1%BB"><span class="toc-text">页面性能类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E5%8E%9F%E5%88%99"><span class="toc-text">性能优化的原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E6%9B%B4%E5%BF%AB"><span class="toc-text">加载更快</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E6%9B%B4%E5%BF%AB"><span class="toc-text">渲染更快</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E5%8D%87%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E7%9A%84%E6%96%B9%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-text">提升页面性能的方法有哪些？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96"><span class="toc-text">页面渲染优化</span></a></li></ol></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

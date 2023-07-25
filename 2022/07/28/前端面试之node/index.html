@@ -1,0 +1,465 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端面试之node - 偶像崇拜</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="node1.特性1.1 同步异步
+单线程、非阻塞IO、...">
+  <meta name="author" content="an31742">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">前端面试之node</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">前端面试之node</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 28, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>6404</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <h1 id="node"><a href="#node" class="headerlink" title="node"></a>node</h1><h3 id="1-特性"><a href="#1-特性" class="headerlink" title="1.特性"></a>1.特性</h3><h5 id="1-1-同步异步"><a href="#1-1-同步异步" class="headerlink" title="1.1 同步异步"></a>1.1 同步异步</h5><ul>
+<li>单线程、非阻塞IO、事假环机制</li>
+<li>V8是node虚拟机，js运行环境；</li>
+<li>node是单线程的，异步是通过一次次的循环事件队列来实现的．同步则是说阻塞式的IO,这在高并发环境会是一个很大的性能问题，所以同步一般只在基础框架的启动时使用，用来加载配置文件，初始化程序什么的．</li>
+<li>node是没有web容器。根据访问的路径做出相应地址的文件读取，适合做路由设计</li>
+</ul>
+<h5 id="1-2-异步流程控制"><a href="#1-2-异步流程控制" class="headerlink" title="1.2 异步流程控制"></a>1.2 异步流程控制</h5><ul>
+<li>多层嵌套回调</li>
+<li>为每一个回调写单独的函数，函数里边再回调 </li>
+<li>用第三方框架比方async, q, promise等</li>
+</ul>
+<h5 id="1-3-express"><a href="#1-3-express" class="headerlink" title="1.3 express"></a>1.3 express</h5><ul>
+<li><p>路由设计</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 配置前缀</span><br><span class="line">me.api_pro = &#x27;/api/plan&#x27;;</span><br><span class="line">me.router = require(&#x27;express&#x27;).Router(); 路由组件</span><br><span class="line">me.router.post(&#x27;/list.do&#x27;, function(req, res) &#123;   </span><br><span class="line">&#125;);</span><br><span class="line">// 生成</span><br><span class="line">me.app.use(me.api_pro, me.router);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>路由参数获取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/users/:name   使用req.params.name获取</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>express response有哪些常用方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">res.download() 弹出文件下载</span><br><span class="line">res.end() 结束response</span><br><span class="line"></span><br><span class="line">res.json() 返回json</span><br><span class="line">res.jsonp() 返回jsonp</span><br><span class="line"></span><br><span class="line">res.redirect() 重定向请求</span><br><span class="line">res.render() 渲染模板</span><br><span class="line"></span><br><span class="line">res.send() 返回多种形式数据</span><br><span class="line">res.sendFile 返回文件</span><br><span class="line">res.sendStatus() 返回状态</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="1-3-mongoDB-amp-amp-mongoose"><a href="#1-3-mongoDB-amp-amp-mongoose" class="headerlink" title="1.3 mongoDB &amp;&amp; mongoose"></a>1.3 mongoDB &amp;&amp; mongoose</h5><ul>
+<li>mongoDB 非结构性数据库。mongoose对象化操作数据库</li>
+<li>mongoose：文档模式–&gt;model模型—&gt;实例；model模型方法 和 实例 方法<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">【文档模型】</span><br><span class="line">var animalSchema = new mongoose.Schema(&#123;</span><br><span class="line">    &quot;name&quot; : String,</span><br><span class="line">    &quot;type&quot; : String</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">定义【实例（文档、对象）】方法：</span><br><span class="line">animalSchema.methods.zhaotonglei = function(callback)&#123;</span><br><span class="line">    this.model(&#x27;Animal&#x27;).find(&#123;&quot;type&quot;:this.type&#125;,callback);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">【model模型】</span><br><span class="line">var Animal = mongoose.model(&#x27;Animal&#x27;, animalSchema);</span><br><span class="line"></span><br><span class="line">【model模型】的方法</span><br><span class="line">Animal</span><br><span class="line"> .findOne(&#123;&quot;name&quot;:&quot;小白&quot;&#125;,function(err,dog)&#123;</span><br><span class="line">    可以使用新定义的 【实例】方法</span><br><span class="line">    dog.zhaotonglei(function(err,result)&#123;</span><br><span class="line">        console.log(result);</span><br><span class="line">    &#125;);</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-全局对象"><a href="#2-全局对象" class="headerlink" title="2.全局对象"></a>2.全局对象</h3><ul>
+<li>process, console, Buffer和exports</li>
+</ul>
+<h3 id="3-核心模块"><a href="#3-核心模块" class="headerlink" title="3.核心模块"></a>3.核心模块</h3><ul>
+<li>EventEmitter, Stream, FS, Net和全局对象</li>
+</ul>
+<h3 id="3-EventEmitter"><a href="#3-EventEmitter" class="headerlink" title="3.EventEmitter"></a>3.EventEmitter</h3><ul>
+<li><p>如何实现EventEmitter？</p>
+</li>
+<li><p>主要分三步：定义一个子类，调用构造函数，继承EventEmitter</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var util = require(&#x27;util&#x27;);</span><br><span class="line">var EventEmitter = require(&#x27;events&#x27;).EventEmitter;</span><br><span class="line"></span><br><span class="line">// 构造函数</span><br><span class="line">function MyEmitter() &#123;</span><br><span class="line">  EventEmitter.call(this);</span><br><span class="line">&#125; </span><br><span class="line">// 继承</span><br><span class="line">util.inherits(MyEmitter, EventEmitter); </span><br><span class="line"></span><br><span class="line">var em = new MyEmitter();</span><br><span class="line">em.on(&#x27;hello&#x27;, function(data) &#123;</span><br><span class="line">  console.log(&#x27;收到事件hello的数据:&#x27;, data);</span><br><span class="line">&#125;);</span><br><span class="line">setTimeout(function(argument) &#123;</span><br><span class="line">  // 接收事件，并打印到控制台</span><br><span class="line">  em.emit(&#x27;hello&#x27;, &#x27;EventEmitter传递消息真方便!&#x27;);</span><br><span class="line">&#125;,200);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>应用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1) 模块间传递消息 </span><br><span class="line">2) 回调函数内外传递消息 </span><br><span class="line">3) 处理流数据，因为流是在EventEmitter基础上实现的. </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>EventEmitter中的newListenser事件有什么用处?</p>
+</li>
+<li><p>newListener可以用来做事件机制的反射，特殊应用，事件管理等．当任何on事件添加到EventEmitter时，就会触发newListener事件，基于这种模式，我们可以做很多自定义处理；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var emitter3 = new MyEmitter();</span><br><span class="line"></span><br><span class="line">新注册的事件，都会被这个监听到</span><br><span class="line">emitter3.on(&#x27;newListener&#x27;, function(name, listener) &#123;</span><br><span class="line">    console.log(&quot;新事件的名字:&quot;, name);</span><br><span class="line">    console.log(&quot;新事件的代码:&quot;, listener);</span><br><span class="line">    setTimeout(function()&#123; console.log(&quot;我是自定义延时处理机制&quot;); &#125;, 1000);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">emitter3.on(&#x27;hello&#x27;, function()&#123;</span><br><span class="line">    console.log(&#x27;hello　node&#x27;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="4-node的错误捕获"><a href="#4-node的错误捕获" class="headerlink" title="4.node的错误捕获"></a>4.node的错误捕获</h3><ul>
+<li>domain来统一处理错误事件<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var domain = require(&#x27;domain&#x27;);</span><br><span class="line">var myDomain = domain.create();</span><br><span class="line"></span><br><span class="line">// 接收事件并打印</span><br><span class="line">myDomain.on(&#x27;error&#x27;, function(err) &#123;</span><br><span class="line">  console.log(&#x27;domain接收到的错误事件:&#x27;, err);</span><br><span class="line">&#125;); </span><br><span class="line"></span><br><span class="line">// 开始运行下面的函数</span><br><span class="line">myDomain.run(function() &#123;</span><br><span class="line">  var emitter1 = new MyEmitter();</span><br><span class="line">  emitter1.emit(&#x27;error&#x27;, &#x27;错误事件来自emitter1&#x27;);</span><br><span class="line">  var emitter2 = new MyEmitter();</span><br><span class="line">  emitter2.emit(&#x27;error&#x27;, &#x27;错误事件来自emitter2&#x27;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="5-Stream"><a href="#5-Stream" class="headerlink" title="5.Stream"></a>5.Stream</h3><h6 id="1-什么是Stream"><a href="#1-什么是Stream" class="headerlink" title="1.什么是Stream?"></a>1.什么是Stream?</h6><ul>
+<li>stream是基于事件EventEmitter的数据管理模式．由各种不同的抽象接口组成，主要包括可写，可读，可读写，可转换等几种类型．</li>
+</ul>
+<h6 id="2-Stream有什么好处"><a href="#2-Stream有什么好处" class="headerlink" title="2.Stream有什么好处?"></a>2.Stream有什么好处?</h6><ul>
+<li>非阻塞式数据处理提升效率，片断处理，节省内存，管道处理方便可扩展等.</li>
+</ul>
+<h6 id="3-demo-读取流"><a href="#3-demo-读取流" class="headerlink" title="3.demo:读取流"></a>3.demo:读取流</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&#x27;fs&#x27;)</span><br><span class="line"></span><br><span class="line">//流的方式读取文件</span><br><span class="line">var readStream = fs.createReadStream(&#x27;readme.md&#x27;);</span><br><span class="line"></span><br><span class="line">var str = &#x27;&#x27;; /*保存数据*/</span><br><span class="line">var count = 0;  /*次数*/</span><br><span class="line">readStream.on(&#x27;data&#x27;, function(chunk) &#123;   </span><br><span class="line">  str += chunk;   </span><br><span class="line">  count++;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">//读取完成</span><br><span class="line">readStream.on(&#x27;end&#x27;, function(chunk) &#123;   </span><br><span class="line">  console.log(count);   </span><br><span class="line">  console.log(str);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">//读取失败</span><br><span class="line">readStream.on(&#x27;error&#x27;, function(err) &#123;   </span><br><span class="line">  console.log(err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-demo-流写入"><a href="#4-demo-流写入" class="headerlink" title="4.demo:流写入"></a>4.demo:流写入</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&quot;fs&quot;);</span><br><span class="line">var data = &#x27;我是从数据库获取的数据，我要保存起来11\n&#x27;;</span><br><span class="line"></span><br><span class="line">// 创建一个可以写入的流，写入到文件 output.txt 中</span><br><span class="line">var writerStream = fs.createWriteStream(&#x27;output.txt&#x27;);</span><br><span class="line"></span><br><span class="line">for(var i=0;i&lt;100;i++)&#123;</span><br><span class="line">    writerStream.write(data,&#x27;utf8&#x27;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//标记写入完成</span><br><span class="line">writerStream.end();</span><br><span class="line"></span><br><span class="line">// 接受完成</span><br><span class="line">writerStream.on(&#x27;finish&#x27;,function()&#123;</span><br><span class="line">    console.log(&#x27;写入完成&#x27;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//失败</span><br><span class="line">writerStream.on(&#x27;error&#x27;,function()&#123;</span><br><span class="line">    console.log(&#x27;写入失败&#x27;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-demo-可读流—-gt-可写流"><a href="#5-demo-可读流—-gt-可写流" class="headerlink" title="5.demo:可读流—-&gt;可写流"></a>5.demo:可读流—-&gt;可写流</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&quot;fs&quot;);</span><br><span class="line">// 创建一个可读流</span><br><span class="line">var readerStream = fs.createReadStream(&#x27;readme.md&#x27;);</span><br><span class="line">// 创建一个可写流</span><br><span class="line">var writerStream = fs.createWriteStream(&#x27;output.txt&#x27;);</span><br><span class="line"></span><br><span class="line">// 管道读写操作</span><br><span class="line">// 读取 input.txt 文件内容，并将内容写入到 output.txt 文件中</span><br><span class="line">readerStream.pipe(writerStream);</span><br><span class="line">console.log(&quot;程序执行完毕&quot;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-文件系统"><a href="#6-文件系统" class="headerlink" title="6.文件系统"></a>6.文件系统</h3><h5 id="6-1-读取文件的方式"><a href="#6-1-读取文件的方式" class="headerlink" title="6.1.读取文件的方式"></a>6.1.读取文件的方式</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1) POSIX式低层读写 </span><br><span class="line">2) 流式读写 </span><br><span class="line">3) 同步文件读写 </span><br><span class="line">4) 异步文件读写</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-2-如何读取JSON文件"><a href="#6-2-如何读取JSON文件" class="headerlink" title="6.2.如何读取JSON文件"></a>6.2.如何读取JSON文件</h5><ul>
+<li>require(‘data.json’)：直接得到js对象。如果多个模块都加载了同一个json文件，那么其中一个改变了js对象，其它跟着改变，这是由node模块的缓存机制造成的，只有一个js模块对象</li>
+<li>第二种是读入文件入内容，然后用JSON.parse(content)转换成js对象。而且各模块互不影响，因为他们都是独立的，是多个js对象.</li>
+</ul>
+<h3 id="7-网络系统"><a href="#7-网络系统" class="headerlink" title="7.网络系统"></a>7.网络系统</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var http = require(&#x27;http&#x27;); // 加载http模块</span><br><span class="line"></span><br><span class="line">http.createServer(function(req, res) &#123;</span><br><span class="line">    // 200代表状态成功, 文档类型是给浏览器识别用的</span><br><span class="line">    res.writeHead(200, &#123;&#x27;Content-Type&#x27;: &#x27;text/html&#x27;&#125;); </span><br><span class="line">    </span><br><span class="line">    // 返回给客户端的html数据</span><br><span class="line">    res.write(&#x27;hw&#x27;); </span><br><span class="line">    res.end(); </span><br><span class="line">&#125;).listen(3000); </span><br></pre></td></tr></table></figure>
+
+<h3 id="8-child-process"><a href="#8-child-process" class="headerlink" title="8.child-process"></a>8.child-process</h3><h5 id="1-什么？"><a href="#1-什么？" class="headerlink" title="1.什么？"></a>1.什么？</h5><ul>
+<li>ode是异步非阻塞的，这对高并发非常有效．可是我们还有其它一些常用需求，比如和操作系统shell命令交互，调用可执行文件，创建子进程进行阻塞式访问或高CPU计算等，child-process就是为满足这些需求而生的．child-process顾名思义，就是把node阻塞的工作交给子进程去做．</li>
+</ul>
+<h5 id="2-exec-execFile-spawn和fork都是做什么用的"><a href="#2-exec-execFile-spawn和fork都是做什么用的" class="headerlink" title="2. exec,execFile,spawn和fork都是做什么用的?"></a>2. exec,execFile,spawn和fork都是做什么用的?</h5><ul>
+<li>exec可以用操作系统原生的方式执行各种命令</li>
+<li>execFile是执行一个文件</li>
+<li>spawn是流式和操作系统进行交互</li>
+<li>fork是两个node程序(javascript)之间时行交互.</li>
+</ul>
+<h5 id="3-实现简单的命令行交互程序"><a href="#3-实现简单的命令行交互程序" class="headerlink" title="3. 实现简单的命令行交互程序"></a>3. 实现简单的命令行交互程序</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var cp = require(&#x27;child_process&#x27;);</span><br><span class="line"></span><br><span class="line">// 执行命令</span><br><span class="line">var child = cp.spawn(&#x27;ls&#x27;); </span><br><span class="line"></span><br><span class="line">// 把执行的命令的后的返回拿到这里</span><br><span class="line">child.stdout.on(&#x27;data&#x27;, (data) =&gt; &#123;</span><br><span class="line">  console.log(data.toString());</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 这句的意思是将子进程的输出(我们要执行这个命令)作为当前程序的输入流，然后重定向到当前程序的标准输出，即控制台</span><br><span class="line">child.stdout.pipe(process.stdout);</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-两个node程序之间怎样交互"><a href="#4-两个node程序之间怎样交互" class="headerlink" title="4.两个node程序之间怎样交互?"></a>4.两个node程序之间怎样交互?</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">1) fork-parent.js</span><br><span class="line">var cp = require(&#x27;child_process&#x27;);</span><br><span class="line">var child = cp.fork(&#x27;./fork-child.js&#x27;);</span><br><span class="line">// 接收儿子来的信息注册的事件</span><br><span class="line">child.on(&#x27;message&#x27;, function(msg)&#123;</span><br><span class="line">    console.log(&#x27;老爸从儿子接受到数据:&#x27;, msg);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 给儿子发送信息</span><br><span class="line">child.send(&#x27;我是你爸爸，送关怀来了!&#x27;);</span><br><span class="line"></span><br><span class="line">2) fork-child.js</span><br><span class="line"></span><br><span class="line">// 外面注册的事件</span><br><span class="line">process.on(&#x27;message&#x27;, function(msg)&#123;</span><br><span class="line">    console.log(&quot;儿子从老爸接收到的数据:&quot;, msg);</span><br><span class="line"></span><br><span class="line">    // 向外发送</span><br><span class="line">    process.send(&quot;我不要关怀，我要银民币！&quot;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>an31742</li>
+    <li><strong>本文链接：</strong><a href="https://an31742.github.io/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8Bnode/index.html" title="https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;28&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8Bnode&#x2F;index.html">https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;28&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8Bnode&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/" rel="tag">前端面试</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8Bgulp-webpack/"><i class="iconfont iconleft"></i>前端面试之gulp-webpack</a>
+    <a href="/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8Bvue/">前端面试之vue<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#node"><span class="toc-text">node</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%89%B9%E6%80%A7"><span class="toc-text">1.特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1"><span class="toc-text">2.全局对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97"><span class="toc-text">3.核心模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-EventEmitter"><span class="toc-text">3.EventEmitter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-node%E7%9A%84%E9%94%99%E8%AF%AF%E6%8D%95%E8%8E%B7"><span class="toc-text">4.node的错误捕获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Stream"><span class="toc-text">5.Stream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-text">6.文件系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F"><span class="toc-text">7.网络系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-child-process"><span class="toc-text">8.child-process</span></a></li></ol></li></ol></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

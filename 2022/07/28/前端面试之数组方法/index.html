@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端面试之数组方法 - 偶像崇拜</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="常用数组方法push&#x2F;pop, shift&...">
+  <meta name="author" content="an31742">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">前端面试之数组方法</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">前端面试之数组方法</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 28, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2641</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <h1 id="常用数组方法"><a href="#常用数组方法" class="headerlink" title="常用数组方法"></a>常用数组方法</h1><h3 id="push-x2F-pop-shift-x2F-unshift"><a href="#push-x2F-pop-shift-x2F-unshift" class="headerlink" title="push&#x2F;pop, shift&#x2F;unshift"></a>push&#x2F;pop, shift&#x2F;unshift</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">【改变原数组,不创建新数组，有返回值】</span><br><span class="line">push():返回操作后数组的长度</span><br><span class="line">pop():返回被删除元素</span><br><span class="line"></span><br><span class="line">shift():从第一个删除，返回第一个元素；</span><br><span class="line">unshift():从前添加一个元素，返回改变数组后的长度；</span><br></pre></td></tr></table></figure>
+
+<h3 id="slice-x2F-splice"><a href="#slice-x2F-splice" class="headerlink" title="slice&#x2F;splice"></a>slice&#x2F;splice</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">【不改变原来数组，返回一个新的数组】：随意的抽取数组的项目</span><br><span class="line">slice(2):从下标为2后全部截取出来新的数组</span><br><span class="line">slice(2,4):包左不包右面，截取出来新数组</span><br><span class="line">slice(-3)：从后截取三个出来</span><br><span class="line">slice():快速复制的为一个新的数组</span><br><span class="line"></span><br><span class="line">【改变原来的数组，返回一个新的数组】：随意改变原来的数组元素，删除内部元素。</span><br><span class="line">splice(2,0,&quot;a&quot;)：原数组增加一个元素，返回[];</span><br><span class="line">splice(2,1):原数组删除某个元素，，返回删除的元素的数组</span><br><span class="line">splice(2,1,&quot;a&quot;):原数组改变，将删除的元素换为后面的元素；返回删除的元素的数组；</span><br><span class="line">arr.splice(0,arr.length):源数组被清空元素，返回新数组</span><br></pre></td></tr></table></figure>
+
+<h3 id="sort-x2F-reverse"><a href="#sort-x2F-reverse" class="headerlink" title="sort&#x2F;reverse"></a>sort&#x2F;reverse</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">【对数组的引用。请注意，数组在原数组上进行排序，不生成副本】</span><br><span class="line">arr.sort(function(a, b) &#123;  a:后面的值、b:前面的值</span><br><span class="line">  return 小于0; // 倒着排列，倒序  越来越小</span><br><span class="line">  return 0;  // 原来的顺序</span><br><span class="line">  return 大于0;  // 正序   越来越大</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">升序</span><br><span class="line">arr.sort(function(a, b) &#123;</span><br><span class="line">  return a-b;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">倒序</span><br><span class="line">arr.sort(function(a, b) &#123;</span><br><span class="line">  return b-a;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">随机</span><br><span class="line">arr.sort(function(a, b) &#123;</span><br><span class="line">  return Math.random() &gt; .5 ? -1 : 1;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">arr.reverse():把原来的数组倒着排列一次，不会生成新的数组；</span><br></pre></td></tr></table></figure>
+
+<h3 id="map-x2F-reduce"><a href="#map-x2F-reduce" class="headerlink" title="map&#x2F;reduce"></a>map&#x2F;reduce</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">【原数组不动，返回一个新的数组】</span><br><span class="line">应用：返回新数组，里面每个元素重新计算；优势就是不用forEach这么麻烦</span><br><span class="line"></span><br><span class="line">arr.map(function(ele)&#123;</span><br><span class="line">  return ele*ele;</span><br><span class="line">&#125;);</span><br><span class="line">arr.map(ele=&gt;ele) 复制一个数组</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">reduce:每个元素执行后面的函数fn，执行函数fn的第一个值是reduce的第二个参数0；</span><br><span class="line">var items = [10, 120, 1000];</span><br><span class="line">var fn = function add(sumSoFar, item) &#123; </span><br><span class="line">    return sumSoFar + item; </span><br><span class="line">&#125;;</span><br><span class="line">var total = items.reduce(fn, 0);</span><br><span class="line">console.log(total); // 1130</span><br></pre></td></tr></table></figure>
+
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">【原数组不动，返回一个新的数组】</span><br><span class="line">应用：返回新数组，过滤一些元素；优势就是不用forEach这么麻烦</span><br><span class="line"></span><br><span class="line">filter()实例：筛选排除掉所有的小值​</span><br><span class="line">function isBigEnough(element) &#123;</span><br><span class="line">   【这里只要一个ture|false】</span><br><span class="line">    return element &gt;= 10;</span><br><span class="line">&#125;</span><br><span class="line">var filtered = [12, 5, 8, 130, 44].filter(isBigEnough);</span><br><span class="line">console.log(filtered);//[ 12, 130, 44 ]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var arr = [1, 2, 3, 4, 5, 0];</span><br><span class="line">var arr_1 = arr.filter(function  (ele) &#123;</span><br><span class="line">  return ele;【0没有返回，return 0就相当于是 return;】</span><br><span class="line">&#125;);</span><br><span class="line">console.log(arr_1); // [1, 2, 3, 4, 5]  </span><br></pre></td></tr></table></figure>
+
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><ul>
+<li><p>判断一个字符串中出现次数最多的字符，统计这个次数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var str = &#x27;asdfssaaasasasasaa&#x27;;</span><br><span class="line">var json = &#123;&#125;;</span><br><span class="line">for (var i = 0; i &lt; str.length; i++) &#123;</span><br><span class="line">    if(!json[str.charAt(i)])&#123;</span><br><span class="line">       json[str.charAt(i)] = 1;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">       json[str.charAt(i)]++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">var iMax = 0;</span><br><span class="line">var iIndex = &#x27;&#x27;;</span><br><span class="line">for(var i in json)&#123;</span><br><span class="line">    if(json[i]&gt;iMax)&#123;</span><br><span class="line">         iMax = json[i];</span><br><span class="line">         iIndex = i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;        </span><br><span class="line">console.log(&#x27;出现次数最多的是:&#x27;+iIndex+&#x27;出现&#x27;+iMax+&#x27;次&#x27;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数组去重</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var arr = [2,3,4,4,5,2,3,6],</span><br><span class="line">   arr2 = [];</span><br><span class="line">for(var i = 0;i&lt; arr.length;i++)&#123;</span><br><span class="line">    if(arr2.indexOf(arr[i]) &lt; 0)&#123;</span><br><span class="line">        arr2.push(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var arr = [2,3,4,4,5,2,3,6];</span><br><span class="line">var arr2 = arr.filter(function(element,index,self)&#123;</span><br><span class="line">return self.indexOf(element) === index;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>an31742</li>
+    <li><strong>本文链接：</strong><a href="https://an31742.github.io/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/index.html" title="https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;28&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95&#x2F;index.html">https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;28&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/" rel="tag">前端面试</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2/"><i class="iconfont iconleft"></i>前端面试之字符串</a>
+    <a href="/2022/07/27/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E5%8E%9F%E5%9E%8B%E9%93%BE/">前端面试之原型链<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95"><span class="toc-text">常用数组方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#push-x2F-pop-shift-x2F-unshift"><span class="toc-text">push&#x2F;pop, shift&#x2F;unshift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#slice-x2F-splice"><span class="toc-text">slice&#x2F;splice</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sort-x2F-reverse"><span class="toc-text">sort&#x2F;reverse</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map-x2F-reduce"><span class="toc-text">map&#x2F;reduce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter"><span class="toc-text">filter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-text">应用</span></a></li></ol></li></ol></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

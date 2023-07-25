@@ -1,0 +1,461 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端面试之经典问题 - 偶像崇拜</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="0.1 + 0.2 &#x3D;&#x3D;&#x3D...">
+  <meta name="author" content="an31742">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">前端面试之经典问题</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">前端面试之经典问题</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>八月 17, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3281</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <h3 id="0-1-0-2-x3D-x3D-x3D-0-3-嘛？为什么？"><a href="#0-1-0-2-x3D-x3D-x3D-0-3-嘛？为什么？" class="headerlink" title="0.1 + 0.2 &#x3D;&#x3D;&#x3D; 0.3 嘛？为什么？"></a>0.1 + 0.2 &#x3D;&#x3D;&#x3D; 0.3 嘛？为什么？</h3><p>JavaScirpt通过使用Number数字类型来表示数字(整数或者浮点数)，遵循IEEE754标准，通过64位来表示一个数字（1+11+52）</p>
+<ul>
+<li>1符号位，0表示正数，1表示负数s</li>
+<li>11指数位（e）</li>
+<li>52尾数，小数部分（有效数字）</li>
+</ul>
+<p>最大安全数：NumberMAX_SAFE_INTEGER&#x3D;Math.pow(2,53)-1,</p>
+<p>转换成整数就是16位，所以0.1&#x3D;&#x3D;&#x3D;0.1,是因为通过 toPrecision(16) 去有效位之后，两者是相等的。</p>
+<p>在两数相加是，会先转化成为二进制，0.1和0.2转化成二进制的时候尾数会发生无线循环，然后进行对阶运算，js引擎对二进制进行截断，所以造成精度丢失。</p>
+<h5 id="精度缺失可能出现在进阶转换和对阶运算"><a href="#精度缺失可能出现在进阶转换和对阶运算" class="headerlink" title="精度缺失可能出现在进阶转换和对阶运算"></a>精度缺失可能出现在进阶转换和对阶运算</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//解决办法</span></span><br><span class="line"><span class="built_in">parseFloat</span>（（<span class="number">0.1</span>+<span class="number">0.2</span>）.<span class="property">precision</span>（<span class="number">12</span>））  <span class="comment">//0.3</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="从输入url到渲染出页面的整个过程"><a href="#从输入url到渲染出页面的整个过程" class="headerlink" title="从输入url到渲染出页面的整个过程"></a>从输入url到渲染出页面的整个过程</h3><h4 id="加载过程"><a href="#加载过程" class="headerlink" title="加载过程"></a>加载过程</h4><ul>
+<li>NDS域名解析 解析域名到IP地址</li>
+<li>浏览器根据IP地址向服雾器发送请求</li>
+<li>浏览器处理http请求并返回给浏览器</li>
+</ul>
+<h4 id="渲染过程"><a href="#渲染过程" class="headerlink" title="渲染过程"></a>渲染过程</h4><ul>
+<li>根据html生成DOM树</li>
+<li>根据css生成cssOM</li>
+<li>将DOM树和cssom树整合成render树</li>
+</ul>
+<h4 id="渲染过程2"><a href="#渲染过程2" class="headerlink" title="渲染过程2"></a>渲染过程2</h4><ul>
+<li>根据render渲染页面</li>
+<li>遇到script暂停渲染优先加载js代码</li>
+</ul>
+<h3 id="typeof一个函数返回的是什么"><a href="#typeof一个函数返回的是什么" class="headerlink" title="typeof一个函数返回的是什么"></a>typeof一个函数返回的是什么</h3><p>typeof 一个函数返回是是function</p>
+<h3 id="事件捕获"><a href="#事件捕获" class="headerlink" title="事件捕获"></a>事件捕获</h3><p>由外向内</p>
+<h3 id="http状态码"><a href="#http状态码" class="headerlink" title="http状态码"></a>http状态码</h3><ul>
+<li>301永久重定向，从a永久跳转到b</li>
+<li>302临时重定向</li>
+<li>304资源未改变</li>
+</ul>
+<h3 id="浏览器存储"><a href="#浏览器存储" class="headerlink" title="浏览器存储"></a>浏览器存储</h3><p>cookie </p>
+<ul>
+<li>document.cookie修改 借用本地存储 最大4kb   请求需要发送到服务端增加请求的数据量</li>
+<li>localStorage 最大是5m  setItem 和 getItem  永久储存</li>
+<li>sessionStorage  最大是5M setItem 和 getItem 关闭会话就会删除</li>
+</ul>
+<h3 id="key的作用"><a href="#key的作用" class="headerlink" title="key的作用"></a>key的作用</h3><ul>
+<li>在 Vue.js 中，key 的作用是为 Vue 的虚拟 DOM 算法提供一个唯一的标识，以便它能够跟踪每个节点的变化，并作出相应的更新。这就是 key 的主要作用。它也可以帮助 Vue 在重新排列元素时保持状态或避免重新渲染。例如，如果您渲染一个列表，并在用户点击按钮时将其重新排列，您可以使用 key 来确保 Vue 可以正确地跟踪每个元素。</li>
+</ul>
+<h3 id="nexttick的原理"><a href="#nexttick的原理" class="headerlink" title="$nexttick的原理"></a>$nexttick的原理</h3><ul>
+<li>Vue 实现响应式并不是数据发生变化之后 DOM 立即变化，而是按一定的策略进行 DOM 的更新。$nextTick 是在下次 DOM 更新循环结束之后执行延迟回调，在修改数据之后使用 $nextTick，则可以在回调中获取更新后的 DOM。**</li>
+</ul>
+<h3 id="props传一个对象，-emit可以改变吗"><a href="#props传一个对象，-emit可以改变吗" class="headerlink" title="props传一个对象，$emit可以改变吗"></a>props传一个对象，$emit可以改变吗</h3><ul>
+<li>可以的。在 Vue.js 中，父组件可以通过在子组件上定义 <code>props</code> 属性来传递数据给子组件。然后，子组件可以通过触发自定义事件来向父组件传递数据</li>
+</ul>
+<h3 id="var-a-x3D-1，function-tset-a-a-x3D-2-console-log-a-x2F-x2F-1"><a href="#var-a-x3D-1，function-tset-a-a-x3D-2-console-log-a-x2F-x2F-1" class="headerlink" title="var a&#x3D;1，function tset(a){a&#x3D;2} console.log(a) &#x2F;&#x2F;1"></a>var a&#x3D;1，function tset(a){a&#x3D;2} console.log(a) &#x2F;&#x2F;1</h3><h3 id="instanceof原理"><a href="#instanceof原理" class="headerlink" title="instanceof原理"></a>instanceof原理</h3><ul>
+<li>instanceof<code>是一种JavaScript运算符，用于检测构造函数的原型属性是否存在于某个实例对象的原型链上。 换句话说，</code>instanceof&#96;运算符用于检查某个对象是否是某个特定类型的实例，比如检查一个对象是否是一个数组<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3></li>
+</ul>
+<h3 id="set如何修改数组和对象"><a href="#set如何修改数组和对象" class="headerlink" title="$set如何修改数组和对象"></a>$set如何修改数组和对象</h3><ul>
+<li><p>首先，判断在非生产环境，传入的target如果是undefined、null或是原始类型，则直接跑出错误。<br>其次，如果判断target如果是个数组，并且key是索引的话，那么就取当前数组长度与key这两者的最大值作为数组的新长度，然后使用数组的splice方法将传入的索引key对应的val值添加进数组。Array类型数据的变化侦测方式时说过，数组的splice方法已经被我们创建的拦截器重写了，也就是说，当使用splice方法向数组内添加元素时，该元素会自动被变成响应式的。</p>
+</li>
+<li><p>接下来，如果传入的target不是数组，那就当作是对象来处理。首先判断传入的key是否已经存在于target中，如果存在，表明这次操作不是新增属性，而是对已有的属性进行简单的修改值，那么就只修改属性值即可，接下来获取到traget的__ob__属性，我们说过，该属性是否为true标志着target是否为响应式对象，接着判断如果tragte是 Vue 实例，或者是 Vue 实例的根数据对象，则抛出警告并退出程序，接着判断如果ob属性为false，那么表明target不是一个响应式对象，那么我们只需简单给它添加上新的属性，不用将新属性转化成响应式，最后，如果target是对象，并且是响应式，那么就调用defineReactive方法将新属性值添加到target上，defineReactive方会将新属性添加完之后并将其转化成响应式，最后通知依赖更新</p>
+</li>
+</ul>
+<p>参考文献 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42038290/article/details/114700728?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-12-114700728-blog-122427044.235%5Ev38%5Epc_relevant_sort&amp;spm=1001.2101.3001.4242.7&amp;utm_relevant_index=15">https://blog.csdn.net/weixin_42038290/article/details/114700728?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-12-114700728-blog-122427044.235^v38^pc_relevant_sort&amp;spm=1001.2101.3001.4242.7&amp;utm_relevant_index=15</a></p>
+<h3 id="export和export-define的区别"><a href="#export和export-define的区别" class="headerlink" title="export和export define的区别"></a>export和export define的区别</h3><ul>
+<li>export 用于导出模块中的多个变量或函数，在导入模块时需要使用大括号括起来，并使用相同的名称来引用这些变量或函数。</li>
+<li>export default 用于导出模块中的默认变量或函数，在导入模块时可以使用任意名称来引用这个变量或函数。</li>
+</ul>
+<h3 id="理解diff算法"><a href="#理解diff算法" class="headerlink" title="理解diff算法"></a>理解diff算法</h3><ul>
+<li><p>diff 算法是一种用于比较两个序列的不同之处的算法。它常用于计算文件或者文本的差异，并且能够快速地找到两个序列之间的相似部分。diff 算法通常与 patch 算法配合使用，来快速地将一个序列转换为另一个序列。</p>
+</li>
+<li><p>diff 算法通常采用动态规划的方法来计算两个序列之间的差异。它会比较两个序列中每个元素的相似度，并且从这些相似度中找到最优的匹配方式。diff 算法通常能够计算出两个序列之间的最小编辑距离，并且能够返回一个编辑路径，指示如何将一个序列转换为另一个序列。</p>
+</li>
+<li><p>diff 算法的时间复杂度通常为 O(n^2)，其中 n 是两个序列的长度。它的空间复杂度也是 O(n^2)。 diff 算法的性能可能会受到序列的相似度的影响，对于非常相似的序列，diff 算法的性能可能会比较差</p>
+</li>
+</ul>
+<h3 id="什么是单向数据流"><a href="#什么是单向数据流" class="headerlink" title="什么是单向数据流"></a>什么是单向数据流</h3><ul>
+<li>所有的 props 都遵循着单向绑定原则，props 因父组件的更新而变化，自然地将新的状态向下流往子组件，而不会逆向传递。这避免了子组件意外修改父组件的状态的情况，不然应用的数据流将很容易变得混乱而难以理解</li>
+</ul>
+<h3 id="单向数据流为什么不能改对象-x2F-数组类型的-props"><a href="#单向数据流为什么不能改对象-x2F-数组类型的-props" class="headerlink" title="单向数据流为什么不能改对象 &#x2F; 数组类型的 props"></a>单向数据流为什么不能改对象 &#x2F; 数组类型的 props</h3><ul>
+<li><p>当对象或数组作为 props 被传入时，虽然子组件无法更改 props 绑定，但仍然可以更改对象或数组内部的值。这是因为 JavaScript 的对象和数组是按引用传递，而对 Vue 来说，禁止这样的改动，虽然可能生效，但有很大的性能损耗，比较得不偿失。</p>
+</li>
+<li><p>这种更改的主要缺陷是它允许了子组件以某种不明显的方式影响父组件的状态，可能会使数据流在将来变得更难以理解。在最佳实践中，你应该尽可能避免这样的更改，除非父子组件在设计上本来就需要紧密耦合。在大多数场景下，子组件应该抛出一个事件来通知父组件做出改变</p>
+</li>
+</ul>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>an31742</li>
+    <li><strong>本文链接：</strong><a href="https://an31742.github.io/2022/08/17/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98/index.html" title="https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;08&#x2F;17&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98&#x2F;index.html">https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;08&#x2F;17&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/" rel="tag">前端面试</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2022/11/26/hello-world/"><i class="iconfont iconleft"></i>Hello World</a>
+    <a href="/2022/08/17/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E6%89%8B%E5%86%99%E9%9D%A2%E8%AF%95%E9%A2%98/">前端面试之手写面试题<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-1-0-2-x3D-x3D-x3D-0-3-%E5%98%9B%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">0.1 + 0.2 &#x3D;&#x3D;&#x3D; 0.3 嘛？为什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E8%BE%93%E5%85%A5url%E5%88%B0%E6%B8%B2%E6%9F%93%E5%87%BA%E9%A1%B5%E9%9D%A2%E7%9A%84%E6%95%B4%E4%B8%AA%E8%BF%87%E7%A8%8B"><span class="toc-text">从输入url到渲染出页面的整个过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#typeof%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E7%9A%84%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">typeof一个函数返回的是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7"><span class="toc-text">事件捕获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#http%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-text">http状态码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AD%98%E5%82%A8"><span class="toc-text">浏览器存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#key%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">key的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nexttick%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-text">$nexttick的原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#props%E4%BC%A0%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%EF%BC%8C-emit%E5%8F%AF%E4%BB%A5%E6%94%B9%E5%8F%98%E5%90%97"><span class="toc-text">props传一个对象，$emit可以改变吗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#var-a-x3D-1%EF%BC%8Cfunction-tset-a-a-x3D-2-console-log-a-x2F-x2F-1"><span class="toc-text">var a&#x3D;1，function tset(a){a&#x3D;2} console.log(a) &#x2F;&#x2F;1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#instanceof%E5%8E%9F%E7%90%86"><span class="toc-text">instanceof原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-text">继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set%E5%A6%82%E4%BD%95%E4%BF%AE%E6%94%B9%E6%95%B0%E7%BB%84%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="toc-text">$set如何修改数组和对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#export%E5%92%8Cexport-define%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">export和export define的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%90%86%E8%A7%A3diff%E7%AE%97%E6%B3%95"><span class="toc-text">理解diff算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-text">什么是单向数据流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E6%94%B9%E5%AF%B9%E8%B1%A1-x2F-%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E7%9A%84-props"><span class="toc-text">单向数据流为什么不能改对象 &#x2F; 数组类型的 props</span></a></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

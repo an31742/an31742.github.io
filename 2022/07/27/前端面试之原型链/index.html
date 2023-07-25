@@ -1,0 +1,538 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端面试之原型链 - 偶像崇拜</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="7，什么是构造函数12345678910111213f...">
+  <meta name="author" content="an31742">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">前端面试之原型链</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">前端面试之原型链</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 27, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>13144</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <h2 id="7，什么是构造函数"><a href="#7，什么是构造函数" class="headerlink" title="7，什么是构造函数"></a>7，什么是构造函数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span> (name, age) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">sayName</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;张三&#x27;</span>, <span class="number">18</span>)</span><br><span class="line">p1.<span class="title function_">sayName</span>() <span class="comment">// =&gt; 张三</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;李四&#x27;</span>, <span class="number">23</span>)</span><br><span class="line">p2.<span class="title function_">sayName</span>() <span class="comment">// =&gt; 李四</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例中，Person() 函数取代了 createPerson() 函数，但是实现效果是一样的。 这是为什么呢？</p>
+<p>我们注意到，Person() 中的代码与 createPerson() 有以下几点不同之处：</p>
+<p>没有显示的创建对象</p>
+<p>直接将属性和方法赋给了 this 对象</p>
+<p>没有 return 语句</p>
+<p><strong>函数名使用的是大写的 Person要创建 Person 实例，则必须使用 new 操作符。 以这种方式调用构造函数会经历以下 4 个步骤：</strong></p>
+<p><strong>创建一个新对象。</strong></p>
+<p><strong>将构造函数的作用域赋给新对象（因此 this 就指向了这个新对象）。</strong></p>
+<p><strong>执行构造函数中的代码。</strong></p>
+<p><strong>返回新对象。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span> (name, age) &#123;</span><br><span class="line">  <span class="comment">// 当使用 new 操作符调用 Person() 的时候，实际上这里会先创建一个对象</span></span><br><span class="line">  <span class="comment">// var instance = &#123;&#125;</span></span><br><span class="line">  <span class="comment">// 然后让内部的 this 指向 instance 对象</span></span><br><span class="line">  <span class="comment">// this = instance</span></span><br><span class="line">  <span class="comment">// 接下来所有针对 this 的操作实际上操作的就是 instance</span></span><br><span class="line"></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">sayName</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 在函数的结尾处会将 this 返回，也就是 instance</span></span><br><span class="line">  <span class="comment">// return this</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="构造函数与实例对象的关系"><a href="#构造函数与实例对象的关系" class="headerlink" title="构造函数与实例对象的关系"></a>构造函数与实例对象的关系</h4><p>使用构造函数的好处不仅仅在于代码的简洁性，更重要的是我们可以识别对象的具体类型了。</p>
+<p> 在每一个实例对象中的_*proto_*中同时有一个 <code>constructor</code> 属性，该属性指向创建该实例的构造函数： </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">constructor</span> === <span class="title class_">Person</span>) <span class="comment">// =&gt; true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p2.<span class="property">constructor</span> === <span class="title class_">Person</span>) <span class="comment">// =&gt; true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">constructor</span> === p2.<span class="property">constructor</span>) <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+
+<p>对象的 <code>constructor</code> 属性最初是用来标识对象类型的， 但是，如果要检测对象的类型，还是使用 <code>instanceof</code> 操作符更可靠一些： </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1 <span class="keyword">instanceof</span> <span class="title class_">Person</span>) <span class="comment">// =&gt; true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p2 <span class="keyword">instanceof</span> <span class="title class_">Person</span>) <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+
+<p>总结：</p>
+<p>1 构造函数是根据具体的事物抽象出来的抽象模板。</p>
+<p>2 实例对象是根据抽象的构造函数模板得到的具体实例对象。</p>
+<p>3 每一个实例对象都具有一个 constructor 属性，指向创建该实例的构造函数。（ 此处constructor 是实例的属性的说法不严谨，具体后面的原型会讲到）</p>
+<p>4 可以通过实例的 constructor 属性判断实例和构造函数之间的关系。（这种方式不严谨，推荐使用 instanceof 操作符，后面学原型会解释为什么）</p>
+<h4 id="构造函数的问题"><a href="#构造函数的问题" class="headerlink" title="构造函数的问题"></a><strong>构造函数的问题</strong></h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span> (name, age) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">type</span> = <span class="string">&#x27;学生&#x27;</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">sayHello</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello &#x27;</span> + <span class="variable language_">this</span>.<span class="property">name</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;王五&#x27;</span>, <span class="number">18</span>)</span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;李四&#x27;</span>, <span class="number">16</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上边的代码，从表面看上好像没什么问题，但是实际上这样做，有一个很大的弊端。 那就是对于每一个实例对象，<code>type</code> 和 <code>sayHello</code> 都是一模一样的内容， 每一次生成一个实例，都必须为重复的内容，多占用一些内存，如果实例对象很多，会造成极大的内存浪费。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">sayHello</span> === p2.<span class="property">sayHello</span>) <span class="comment">// =&gt; false</span></span><br></pre></td></tr></table></figure>
+
+<p>对于这种问题我们可以把需要共享的函数定义到构造函数外部： </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> sayHello = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello &#x27;</span> + <span class="variable language_">this</span>.<span class="property">name</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span> (name, age) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">type</span> = <span class="string">&#x27;学生&#x27;</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">sayHello</span> = sayHello</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;王五&#x27;</span>, <span class="number">18</span>)</span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;李四&#x27;</span>, <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">sayHello</span> === p2.<span class="property">sayHello</span>) <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+
+<p>这样确实可以了，但是如果有多个需要共享的函数的话就会造成全局命名空间冲突的问题。如何解决这个问题呢？你肯定想到了可以把多个函数放到一个对象中用来避免全局命名空间冲突的问题 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fns = &#123;</span><br><span class="line">  <span class="attr">sayHello</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello &#x27;</span> + <span class="variable language_">this</span>.<span class="property">name</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">sayAge</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">age</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span> (name, age) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">type</span> = <span class="string">&#x27;学生&#x27;</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">sayHello</span> = fns.<span class="property">sayHello</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">sayAge</span> = fns.<span class="property">sayAge</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;王五&#x27;</span>, <span class="number">18</span>)</span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;李四&#x27;</span>, <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">sayHello</span> === p2.<span class="property">sayHello</span>) <span class="comment">// =&gt; true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">sayAge</span> === p2.<span class="property">sayAge</span>) <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="8，什么是原型，"><a href="#8，什么是原型，" class="headerlink" title="8，什么是原型，"></a>8，什么是原型，</h2><p><strong>Javascript 规定，每一个构造函数都有一个 prototype 属性，指向另一个对象。 这个对象的所有属性和方法，都会被构造函数的实例继承</strong> </p>
+<p>这也就意味着，我们可以把所有对象实例需要共享的属性和方法直接定义在 <code>prototype</code> 对象上。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span> (name, age) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>)</span><br><span class="line"></span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">type</span> = <span class="string">&#x27;学生&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayName</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Person</span>(...)</span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="title class_">Person</span>(...)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">sayName</span> === p2.<span class="property">sayName</span>) <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+
+<p>这时所有实例的 <strong>type 属性和 sayName() 方法</strong>， 其实都是同一个内存地址，指向 <code>prototype</code> 对象，因此就提高了运行效率。 </p>
+<p><strong>任何函数都有一个 prototype 属性，该属性是一个对象。</strong> </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">F</span> () &#123;&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(F.<span class="property"><span class="keyword">prototype</span></span>) <span class="comment">// =&gt; object</span></span><br><span class="line"></span><br><span class="line">F.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayHi</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hi!&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>构造函数的 prototype 对象默认都有一个 constructor 属性，指向 prototype 对象所在函数。</strong> </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(F.<span class="property">constructor</span> === F) <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>通过构造函数得到的实例对象内部会包含一个指向构造函数的 prototype 对象的指针 proto</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> <span class="title function_">F</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(instance.<span class="property">__proto__</span> === F.<span class="property"><span class="keyword">prototype</span></span>) <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>__proto__</code> 是非标准属性。</strong></p>
+<p>实例对象可以直接访问原型对象成员：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">instance.<span class="title function_">sayHi</span>() <span class="comment">// =&gt; hi!</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>总结：</strong></p>
+<p><strong>任何函数都具有一个 prototype 属性，该属性是一个对象。</strong></p>
+<p><strong>构造函数的 prototype 对象默认都有一个 constructor 属性，指向 prototype 对象所在函数。</strong></p>
+<p><strong>通过构造函数得到的实例对象内部会包含一个指向构造函数的 prototype 对象的指针 proto。</strong></p>
+<p><strong>所有实例都直接或间接继承了原型对象的成员。</strong></p>
+<h2 id="9，什么是原型链"><a href="#9，什么是原型链" class="headerlink" title="9，什么是原型链"></a>9，什么是原型链</h2><p><strong>每当代码读取某个对象的某个属性时，都会执行一次搜索，目标是具有给定名字的属性。</strong> </p>
+<ol>
+<li>搜索首先从对象实例本身开始。</li>
+<li>如果在实例中找到了具有给定名字的属性，则返回该属性的值。</li>
+<li>如果没有找到，则继续搜索指针指向的原型对象，在原型对象中查找具有给定名字的属性。</li>
+<li>如果在原型对象中找到了这个属性，则返回该属性的值。</li>
+</ol>
+<p><strong>也就是说，在我们调用 person1.sayName() 的时候，会先后执行两次搜索</strong>：</p>
+<p>首先，解析器会问：“实例 person1 有 sayName 属性吗？”答：“没有。</p>
+<p>然后，它继续搜索，再问：“ person1 的原型有 sayName 属性吗？”答：“有。</p>
+<p>于是，它就读取那个保存在原型对象中的函数。</p>
+<p>当我们调用 person2.sayName() 时，将会重现相同的搜索过程，得到相同的结果。</p>
+<p>这就是多个对象实例共享原型所保存的属性和方法的基本原理 </p>
+<p><strong>总结：</strong></p>
+<ol>
+<li>先在自己身上找，找到即返回。</li>
+<li>自己身上找不到，则沿着原型链向上查找，找到即返回。</li>
+<li>如果一直到原型链的末端还没有找到，则返回 <code>undefined。</code></li>
+</ol>
+<h4 id="9-2-实例对象读写原型对象成员"><a href="#9-2-实例对象读写原型对象成员" class="headerlink" title="9.2 实例对象读写原型对象成员"></a>9.2 实例对象读写原型对象成员</h4><p>读取：</p>
+<p><strong>先在自己身上找，找到即返回。</strong></p>
+<p><strong>自己身上找不到，则沿着原型链向上查找，找到即返回。</strong></p>
+<p><strong>如果一直到原型链的末端还没有找到，则返回 undefined。</strong></p>
+<p>值类型成员写入（实例对象.值类型成员 &#x3D; xx）：</p>
+<p><strong>当实例期望重写原型对象中的某个普通数据成员时实际上会把该成员添加到自己身上。</strong></p>
+<p><strong>也就是说该行为实际上会屏蔽掉对原型对象成员的访问。</strong></p>
+<p>引用类型成员写入（实例对象.引用类型成员 &#x3D; xx）：同上。</p>
+<p>复杂类型修改（实例对象.成员.xx &#x3D; xx）：</p>
+<p><strong>同样会先在自己身上找该成员，如果自己身上找到则直接修改。</strong></p>
+<p><strong>如果自己身上找不到，则沿着原型链继续查找，如果找到则修改。</strong></p>
+<p><strong>如果一直到原型链的末端还没有找到该成员，则报错（实例对象.undefined.xx &#x3D; xx）</strong>。</p>
+<p>原型链的定义：</p>
+<p>原型链是一种关系,是实例对象和原型对象之间的关系,这种关系是通过原型(proto)来联系的。JavaScript 对象有一个指向一个原型对象的链。当试图访问一个对象的属性时，它不仅仅在该对象上搜寻，还会搜寻该对象的原型，以及该对象的原型的原型，依次层层向上搜索，直到找到一个名字匹配的属性或到达原型链的末尾。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 人的构造函数</span></span><br><span class="line"> <span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name,age</span>) &#123;</span><br><span class="line">   <span class="comment">// 属性</span></span><br><span class="line">   <span class="variable language_">this</span>.<span class="property">name</span>=name;</span><br><span class="line">   <span class="variable language_">this</span>.<span class="property">age</span>=age;</span><br><span class="line">   <span class="comment">// 在构造函数中的方法</span></span><br><span class="line">   <span class="variable language_">this</span>.<span class="property">eat</span>=<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">     <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;吃吃吃&quot;</span>);</span><br><span class="line">   &#125;;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// 添加共享的属性</span></span><br><span class="line"> <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sex</span>=<span class="string">&quot;男&quot;</span>;</span><br><span class="line"> <span class="comment">// 添加共享的方法</span></span><br><span class="line"> <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayHi</span>=<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">   <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;哈哈哈&quot;</span>);</span><br><span class="line"> &#125;;</span><br><span class="line"> <span class="comment">// 实例化对象,并初始化</span></span><br><span class="line"> <span class="keyword">var</span> per=<span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;张三&quot;</span>,<span class="number">18</span>);</span><br><span class="line"> per.<span class="title function_">sayHi</span>();</span><br></pre></td></tr></table></figure>
+
+<p>上边的代码中实例对象的原型__proto__和构造函数的原型prototype指向是相同的，实例对象中的__proto__原型指向的是构造函数中的原型prototype。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(per.<span class="property">__proto__</span>==<span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>);<span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>原型链</p>
+<p><img   class="lazyload" data-original="D:\面试\简历\面试总结\原型链.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" > </p>
+<h4 id="9-3原型的指向"><a href="#9-3原型的指向" class="headerlink" title="9.3原型的指向"></a><strong>9.3原型的指向</strong></h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//人的构造函数</span></span><br><span class="line"> <span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">age</span>) &#123;</span><br><span class="line">   <span class="variable language_">this</span>.<span class="property">age</span>=<span class="number">10</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//人的原型对象方法</span></span><br><span class="line"> <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">eat</span>=<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">   <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;吃吃吃!!!&quot;</span>);</span><br><span class="line"> &#125;;</span><br><span class="line"> <span class="comment">//学生的构造函数</span></span><br><span class="line"> <span class="keyword">function</span> <span class="title function_">Student</span>(<span class="params"></span>) &#123;</span><br><span class="line"> </span><br><span class="line"> &#125;</span><br><span class="line"> <span class="title class_">Student</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayHi</span>=<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">   <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;学学学，为中华崛起而读书!!!&quot;</span>);</span><br><span class="line"> &#125;;</span><br><span class="line"> <span class="comment">//学生的原型,指向了一个人的实例对象</span></span><br><span class="line"> <span class="title class_">Student</span>.<span class="property"><span class="keyword">prototype</span></span>=<span class="keyword">new</span> <span class="title class_">Person</span>(<span class="number">18</span>);</span><br><span class="line"> <span class="keyword">var</span> stu=<span class="keyword">new</span> <span class="title class_">Student</span>();</span><br><span class="line"> <span class="variable language_">console</span>.<span class="title function_">dir</span>(stu);</span><br><span class="line"> stu.<span class="title function_">eat</span>(); <span class="comment">// 吃吃吃!!!</span></span><br><span class="line"> stu.<span class="title function_">sayHi</span>();<span class="comment">//错误stu.sayHi is not a function，原型指向发生改变，找不到sayHi()方法</span></span><br></pre></td></tr></table></figure>
+
+<p>上边的代码中，实例对象stu调用原型方法sayHi()的时候发生错误，这是因为Student.prototype&#x3D;new Person(18);使原型指向发生了改变，stu对象中已经找不到sayHi()方法。<strong>原型指向改变分析： 图中的红线构成原型链。</strong> </p>
+<p>在1.3.1的代码中，因为原型指向发生改变，找不到sayHi()方法而发生错误，我们可以在原型改变指向之后添加原型方法,改变代码如下： </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//人的构造函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">age</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span>=<span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//人的原型对象方法</span></span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">eat</span>=<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;吃吃吃!!!&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//学生的构造函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Student</span>(<span class="params"></span>) &#123;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//学生的原型,指向了一个人的实例对象</span></span><br><span class="line"><span class="title class_">Student</span>.<span class="property"><span class="keyword">prototype</span></span>=<span class="keyword">new</span> <span class="title class_">Person</span>(<span class="number">18</span>);</span><br><span class="line"><span class="title class_">Student</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayHi</span>=<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;学学学，为中华崛起而读书!!!&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> stu=<span class="keyword">new</span> <span class="title class_">Student</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">dir</span>(stu);</span><br><span class="line">stu.<span class="title function_">eat</span>(); <span class="comment">// 吃吃吃!!!</span></span><br><span class="line">stu.<span class="title function_">sayHi</span>();<span class="comment">// 学学学，为中华崛起而读书!!!</span></span><br></pre></td></tr></table></figure>
+
+<p>**注意:**简单的原型写法，会将 Person.prototype 重置到了一个新的对象，即改变原型的指向。我们也应该在原型改变指向之后添加原型方法。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">age</span>) &#123;</span><br><span class="line">   <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="comment">//指向改变了</span></span><br><span class="line"> <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span> = &#123;</span><br><span class="line">   <span class="attr">eat</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">     <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;吃&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;;</span><br><span class="line"> <span class="comment">//添加原型方法</span></span><br><span class="line"> <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayHi</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">   <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;你好帅呀!!!&quot;</span>);</span><br><span class="line"> &#125;;</span><br><span class="line"> <span class="keyword">var</span> per = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="number">10</span>);</span><br><span class="line"> per.<span class="title function_">sayHi</span>();<span class="comment">// 你好帅呀!!!</span></span><br></pre></td></tr></table></figure>
+
+<p>9.4实例对象属性和原型对象属性重名</p>
+<p><strong>实例对象访问某个属性,应该先从实例对象中找,找到了就直接用，找不到就去指向的原型对象中找,找到了就使用,找不到返回undefined。</strong> </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">age,sex</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span>=age;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">sex</span>=sex;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sex</span>=<span class="string">&quot;女&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> per=<span class="keyword">new</span> <span class="title class_">Person</span>(<span class="number">18</span>,<span class="string">&quot;男&quot;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(per.<span class="property">sex</span>); <span class="comment">// 男</span></span><br><span class="line"><span class="comment">// 因为JS是一门动态类型的语言,如果对象没有这个属性,只要对象.属性名字,对象就有了这个属性了</span></span><br><span class="line"><span class="comment">// 但是该属性没有赋值, 所以per.albert结果是:undefined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(per.<span class="property">albert</span>); <span class="comment">// undefined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(albert); <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+
+<p>通过实例对象不能改变原型对象中的属性值，要想改变原型对象中的属性值,应该直接通过原型对象.属性&#x3D;值；进行改变。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sex</span>=<span class="string">&quot;我的天呐!!!我为什么这么帅?&quot;</span>;</span><br><span class="line">per.<span class="property">sex</span>=<span class="string">&quot;不知道&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(per.<span class="property">sex</span>);</span><br><span class="line"> </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">dir</span>(per);</span><br></pre></td></tr></table></figure>
+
+<h2 id="10，继承"><a href="#10，继承" class="headerlink" title="10，继承"></a>10，继承</h2><p>面向对象编程思想是根据需求分析对象，找到对象有什么特征和行为，然后通过代码的方式来实现需求。要想实现这个需求，就要创建对象，要想创建对象，就应该有构造函数，然后通过构造函数来创建对象，通过对象调用属性和方法来实现相应的功能及需求。<br>因为面向对象的思想适合于人的想法，编程起来会更加的方便，后期维护的时候也要会更加容易，所以我们才要学习面向对象编程。但JS不是一门面向对象的语言，而是一门基于对象的语言。JS不像JAVA,C#等面向对象的编程语言中有类(class)的概念(也是一种特殊的数据类型),JS中没有类(class),但是JS可以模拟面向对象的思想编程,在JS可以通过构造函数来模拟类的概念(class)。在ES6中，class (类)作为对象的模板被引入，可以通过 class 关键字定义类，但是它的的本质还是 function</p>
+<h4 id="10-1什么是继承"><a href="#10-1什么是继承" class="headerlink" title="10.1什么是继承"></a>10.1什么是继承</h4><p>继承是一种类(class)与类之间的关系,JS中没有类,但是可以通过构造函数模拟类,然后通过原型来实现继承，继承是为了实现数据共享，js中的继承当然也是为了实现数据共享。</p>
+<p>继承是子类继承父类的特征和行为，使得子类对象（实例）具有父类的属性和方法，或子类从父类继承方法，使得子类具有父类相同的行为。继承可以使得子类具有父类的各种属性和方法，而不需要再次编写相同的代码。</p>
+<h4 id="10-2通过原型实现继承"><a href="#10-2通过原型实现继承" class="headerlink" title="10.2通过原型实现继承"></a>10.2通过原型实现继承</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 人</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name, age, sex</span>) &#123;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">sex</span> = sex;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">eat</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;吃吃吃!!!&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sleep</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;睡睡睡!!!&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">//学生</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Student</span>(<span class="params">score</span>) &#123;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">score</span> = score;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//改变学生的原型的指向即可让学生继承人</span></span><br><span class="line"><span class="title class_">Student</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;张三&quot;</span>, <span class="number">18</span>, <span class="string">&quot;男&quot;</span>);</span><br><span class="line"><span class="title class_">Student</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">study</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;学习真的太累了！！！&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> stu = <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="number">99</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;学生从人中继承的属性和行为:&quot;</span>); <span class="comment">// &gt;学生从人中继承的属性和行为:</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(stu.<span class="property">name</span>); <span class="comment">// &gt;张三</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(stu.<span class="property">age</span>); <span class="comment">// &gt;18</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(stu.<span class="property">sex</span>); <span class="comment">// &gt;男</span></span><br><span class="line">stu.<span class="title function_">eat</span>(); <span class="comment">// &gt;吃吃吃!!!</span></span><br><span class="line">stu.<span class="title function_">sleep</span>(); <span class="comment">// &gt;睡睡睡!!!</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;学生中自己有的属性和行为:&quot;</span>); <span class="comment">// &gt;学生中自己有的属性和行为:</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(stu.<span class="property">score</span>); <span class="comment">// &gt;99</span></span><br><span class="line">stu.<span class="title function_">study</span>(); <span class="comment">// &gt;学习真的太累了！！！</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="10-3通过构造函数实现继承"><a href="#10-3通过构造函数实现继承" class="headerlink" title="10,3通过构造函数实现继承"></a>10,3通过构造函数实现继承</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 动物的构造函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Animal</span>(<span class="params">name, weight</span>) &#123;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">weight</span> = weight;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//动物的原型的方法</span></span><br><span class="line"><span class="title class_">Animal</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">eat</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;弟兄们冲啊，赶快吃吃吃!!!&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//狗的构造函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Dog</span>(<span class="params">color</span>) &#123;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">color</span> = color;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Animal</span>(<span class="string">&quot;小三&quot;</span>, <span class="string">&quot;30kg&quot;</span>);</span><br><span class="line"><span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">bitePerson</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;~汪汪汪~,快让开,我要咬人了!!!&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//哈士奇构造函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Husky</span>(<span class="params">age</span>) &#123;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Husky</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Dog</span>(<span class="string">&quot;黑白色&quot;</span>);</span><br><span class="line"><span class="title class_">Husky</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">playYou</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;咬坏充电器,咬坏耳机,拆家...哈哈，好玩不!!!&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> husky = <span class="keyword">new</span> <span class="title class_">Husky</span>(<span class="number">3</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(husky.<span class="property">name</span>, husky.<span class="property">weight</span>, husky.<span class="property">color</span>);</span><br><span class="line">husky.<span class="title function_">eat</span>();</span><br><span class="line">husky.<span class="title function_">bitePerson</span>();</span><br><span class="line">husky.<span class="title function_">playYou</span>();</span><br></pre></td></tr></table></figure>
+
+<p><img   class="lazyload" data-original="D:\面试\简历\面试总结\继承.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<h4 id="10-4借用构造函数实现继承"><a href="#10-4借用构造函数实现继承" class="headerlink" title="10.4借用构造函数实现继承"></a>10.4借用构造函数实现继承</h4><p>在上边的讲解中，我们为了数据共享,改变了原型指向,做到了继承，即通过改变原型指向实现了继承。这导致了一个问题，因为我们改变原型指向的同时,直接初始化了属性，这样继承过来的属性的值都是一样的了。这是个问题，如果我们想要改变继承过来的值，只能重新调用对象的属性进行重新赋值，这又导致我们上边的初始化失去了意义。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name, age, sex, weight</span>) &#123;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">sex</span> = sex;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">weight</span> = weight;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayHi</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;你好帅呀!!!&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Student</span>(<span class="params">score</span>) &#123;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">score</span> = score;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//希望人的类别中的数据可以共享给学生---继承</span></span><br><span class="line"><span class="title class_">Student</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;小三&quot;</span>, <span class="number">18</span>, <span class="string">&quot;男&quot;</span>, <span class="string">&quot;58kg&quot;</span>);</span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> stu1 = <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;99&quot;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(stu1.<span class="property">name</span>, stu1.<span class="property">age</span>, stu1.<span class="property">sex</span>, stu1.<span class="property">weight</span>, stu1.<span class="property">score</span>);</span><br><span class="line">stu1.<span class="title function_">sayHi</span>();</span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> stu2 = <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;89&quot;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(stu2.<span class="property">name</span>, stu2.<span class="property">age</span>, stu2.<span class="property">sex</span>, stu2.<span class="property">weight</span>, stu2.<span class="property">score</span>);</span><br><span class="line">stu2.<span class="title function_">sayHi</span>();</span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> stu3 = <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;66&quot;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(stu3.<span class="property">name</span>, stu3.<span class="property">age</span>, stu3.<span class="property">sex</span>, stu3.<span class="property">weight</span>, stu3.<span class="property">score</span>);</span><br><span class="line">stu3.<span class="title function_">sayHi</span>();</span><br></pre></td></tr></table></figure>
+
+<h2 id="https-blog-csdn-net-qq-23853743-article-details-108348436"><a href="#https-blog-csdn-net-qq-23853743-article-details-108348436" class="headerlink" title="https://blog.csdn.net/qq_23853743/article/details/108348436"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_23853743/article/details/108348436">https://blog.csdn.net/qq_23853743/article/details/108348436</a></h2><h2 id="ES6-之前使用-prototype-实现继承"><a href="#ES6-之前使用-prototype-实现继承" class="headerlink" title="ES6 之前使用 prototype 实现继承"></a>ES6 之前使用 prototype 实现继承</h2><p>Object.create() 会创建一个 “新” 对象，然后将此对象内部的 [[Prototype]] 关联到你指定的对象（Foo.prototype）。Object.create(null) 创建一个空 [[Prototype]] 链接的对象，这个对象无法进行委托。</p>
+<pre><code> <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Foo</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Foo</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">myName</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">name</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 继承属性，通过借用构造函数调用</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Bar</span>(<span class="params">name, label</span>) &#123;</span><br><span class="line">  <span class="title class_">Foo</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>, name);</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">label</span> = label;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 继承方法，创建备份</span></span><br><span class="line"><span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Foo</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 必须设置回正确的构造函数，要不然在会发生判断类型出错</span></span><br><span class="line"><span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> = <span class="title class_">Bar</span>;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 必须在上一步之后</span></span><br><span class="line"><span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">myLabel</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">label</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="title class_">Bar</span>(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;obj a&quot;</span>);</span><br><span class="line"></span><br><span class="line">a.<span class="title function_">myName</span>(); <span class="comment">// &quot;a&quot;</span></span><br><span class="line">a.<span class="title function_">myLabel</span>(); <span class="comment">// &quot;obj a&quot;</span></span><br></pre></td></tr></table></figure>
+</code></pre>
+<h2 id="如果一个构造函数，bind了一个对象，用这个构造函数创建出的实例会继承这个对象的属性吗？为什么？"><a href="#如果一个构造函数，bind了一个对象，用这个构造函数创建出的实例会继承这个对象的属性吗？为什么？" class="headerlink" title="如果一个构造函数，bind了一个对象，用这个构造函数创建出的实例会继承这个对象的属性吗？为什么？"></a>如果一个构造函数，bind了一个对象，用这个构造函数创建出的实例会继承这个对象的属性吗？为什么？</h2><p>不会继承，因为根据 this 绑定四大规则，new 绑定的优先级高于 bind 显示绑定，通过 new 进行构造函数调用时，会创建一个新对象，这个新对象会代替 bind 的对象绑定，作为此函数的 this，并且在此函数没有返回对象的情况下，返回这个新建的对象</p>
+<h2 id="箭头函数和普通函数有啥区别？箭头函数能当构造函数吗？"><a href="#箭头函数和普通函数有啥区别？箭头函数能当构造函数吗？" class="headerlink" title="箭头函数和普通函数有啥区别？箭头函数能当构造函数吗？"></a>箭头函数和普通函数有啥区别？箭头函数能当构造函数吗？</h2><ul>
+<li><p>普通函数通过 function 关键字定义， this 无法结合词法作用域使用，在运行时绑定，只取决于函数的调用方式，在哪里被调用，调用位置。（取决于调用者，和是否独立运行）</p>
+</li>
+<li><p>箭头函数使用被称为 “胖箭头” 的操作 <code>=&gt;</code> 定义，箭头函数不应用普通函数 this 绑定的四种规则，而是根据外层（函数或全局）的作用域来决定 this，且箭头函数的绑定无法被修改（new 也不行）。</p>
+</li>
+<li><ul>
+<li><p>一个函数内部有两个方法：[[Call]] 和 [[Construct]]，在通过 new 进行函数调用时，会执行 [[construct]] 方法，创建一个实例对象，然后再执行这个函数体，将函数的 this 绑定在这个实例对象上</p>
+</li>
+<li><p>当直接调用时，执行 [[Call]] 方法，直接执行函数体</p>
+</li>
+<li><p>箭头函数没有 [[Construct]] 方法，不能被用作构造函数调用，当使用 new 进行函数调用时会报错。</p>
+</li>
+<li><p>箭头函数常用于回调函数中，包括事件处理器或定时器</p>
+</li>
+<li><p>箭头函数和 var self &#x3D; this，都试图取代传统的 this 运行机制，将 this 的绑定拉回到词法作用域</p>
+</li>
+<li><p>没有原型、没有 this、没有 super，没有 arguments，没有 new.target</p>
+</li>
+<li><p>不能通过 new 关键字调用</p>
+   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">a</span>) =&gt;</span> &#123;</span><br><span class="line">     <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj1 = &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">3</span> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = foo.<span class="title function_">call</span>(obj1);</span><br><span class="line">bar.<span class="title function_">call</span>(obj2);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>an31742</li>
+    <li><strong>本文链接：</strong><a href="https://an31742.github.io/2022/07/27/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E5%8E%9F%E5%9E%8B%E9%93%BE/index.html" title="https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;27&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E5%8E%9F%E5%9E%8B%E9%93%BE&#x2F;index.html">https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;27&#x2F;%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E5%8E%9F%E5%9E%8B%E9%93%BE&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+        
+  <nav class="nav">
+    <a href="/2022/07/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/"><i class="iconfont iconleft"></i>前端面试之数组方法</a>
+    <a href="/2022/07/27/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E9%97%AD%E5%8C%85/">前端面试之闭包<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#7%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-text">7，什么是构造函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%8E%9F%E5%9E%8B%EF%BC%8C"><span class="toc-text">8，什么是原型，</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="toc-text">9，什么是原型链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10%EF%BC%8C%E7%BB%A7%E6%89%BF"><span class="toc-text">10，继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#https-blog-csdn-net-qq-23853743-article-details-108348436"><span class="toc-text">https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_23853743&#x2F;article&#x2F;details&#x2F;108348436</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6-%E4%B9%8B%E5%89%8D%E4%BD%BF%E7%94%A8-prototype-%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF"><span class="toc-text">ES6 之前使用 prototype 实现继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E4%B8%80%E4%B8%AA%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%EF%BC%8Cbind%E4%BA%86%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%EF%BC%8C%E7%94%A8%E8%BF%99%E4%B8%AA%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BA%E5%87%BA%E7%9A%84%E5%AE%9E%E4%BE%8B%E4%BC%9A%E7%BB%A7%E6%89%BF%E8%BF%99%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%97%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">如果一个构造函数，bind了一个对象，用这个构造函数创建出的实例会继承这个对象的属性吗？为什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E5%92%8C%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E6%9C%89%E5%95%A5%E5%8C%BA%E5%88%AB%EF%BC%9F%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E8%83%BD%E5%BD%93%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%90%97%EF%BC%9F"><span class="toc-text">箭头函数和普通函数有啥区别？箭头函数能当构造函数吗？</span></a></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

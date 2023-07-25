@@ -1,0 +1,471 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端学习之vue3高级语法 - 偶像崇拜</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="vue3高级语法
+h函数
+作用：创建 vnode 的一...">
+  <meta name="author" content="an31742">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">前端学习之vue3高级语法</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">前端学习之vue3高级语法</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 19, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4251</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <h1 id="vue3高级语法"><a href="#vue3高级语法" class="headerlink" title="vue3高级语法"></a>vue3高级语法</h1><ol>
+<li>h函数<ol>
+<li>作用：创建 vnode 的一个函数 完整语法 createVNode() 函数</li>
+<li>使用地方：render函数  setup函数<ol>
+<li><p>&#96;&#96;&#96;js<br>import {h} from ‘vue’</p>
+<p>export default{<br>   render() {<br>   return h(‘div’,{class:”app”},”hello App”)<br>   },<br>}</p>
+</li>
+</ol>
+<pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">2.  ```js</span><br><span class="line">     import &#123;h&#125; from &#x27;vue&#x27;</span><br><span class="line">     </span><br><span class="line">     export default&#123;</span><br><span class="line">        setup() &#123;</span><br><span class="line">            return h(&#x27;div&#x27;,&#123;class:&quot;app&quot;&#125;,&quot;hello App&quot;)</span><br><span class="line">        &#125;,</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+</li>
+<li>jsx在babel中的配置<ol>
+<li>安装：npm install @vue&#x2F;babel-plugin-jsx -D</li>
+<li>在babel.config.js配置文件<ol>
+<li>&#96;&#96;&#96;js<br>module.exports&#x3D;{<br> presest:[<br>   ‘@vue&#x2F;cli-plgugin-babel&#x2F;presest’<br> ],<br> plugin:[<br>   “@vue&#x2F;babel-plgugin-jsx”<br> ]<br>}<br><br> export.default{<br>  render(){<br>   return (<div>hello jsx</div>)<br>  }<br><br> }   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">3. 自定义指令</span><br><span class="line">   1. 使用条件：对DOM元素进行底层操作，这个时候就会用到自定义指令</span><br><span class="line">   2. 使用方法：</span><br><span class="line">      1. 组件中通过 directives 选项，只能在当前组件中使用</span><br><span class="line">      2. app的 directive 方法，可以在任意组件中被使用</span><br><span class="line">      3.   ```js</span><br><span class="line">            //当某个元素挂载完成后可以自定获取焦点</span><br><span class="line">           //实现方式1  默认的实现方式</span><br><span class="line">          &lt;template&gt;</span><br><span class="line">             &lt;div&gt;</span><br><span class="line">               &lt;input  type=&quot;text&quot; ref=&quot;inputRef&quot;&gt;</span><br><span class="line">             &lt;/div&gt;</span><br><span class="line">          &lt;/template&gt;</span><br><span class="line"></span><br><span class="line">           &lt;script&gt;</span><br><span class="line">             import &#123;setup,onMounted&#125; from &#x27;vue&#x27;</span><br><span class="line">              export.default=&#123;</span><br><span class="line">                setup()&#123;</span><br><span class="line">                    const inputRef=ref(null)</span><br><span class="line"></span><br><span class="line">                    onMounted(()=&gt;&#123;</span><br><span class="line">                       inputRef.value.focus() </span><br><span class="line">                    &#125;)</span><br><span class="line">                    return &#123;inputRef&#125;</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">           &lt;/script&gt;</span><br><span class="line">           //实现方式2 v-focus 的局部指令,在组件选项中使用 directives 在对象中编写我们自定义指令的名称,自定义指令有一个生命周期，是在组件挂载后调用的 mounted</span><br><span class="line">           &lt;script&gt;</span><br><span class="line">           </span><br><span class="line">              export.default=&#123;</span><br><span class="line">               directives:&#123;</span><br><span class="line">                 focus:&#123;</span><br><span class="line">                    mounted(el)&#123;</span><br><span class="line">                        el.focus()</span><br><span class="line">                    &#125;</span><br><span class="line">                 &#125;</span><br><span class="line">               &#125;</span><br><span class="line">              &#125;</span><br><span class="line">           &lt;/script&gt;</span><br><span class="line"></span><br><span class="line">           //实现方式3  v-focus 的全局指令</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">            app.directive(&quot;focus&quot;,&#123;</span><br><span class="line">                mounted(el)&#123;</span><br><span class="line">                    el.focus()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li>指令的生命周期<ol>
+<li>created：在绑定元素的 attribute 或事件监听器被应用之前调用</li>
+<li>beforeMount：当指令第一次绑定到元素并且在挂载父组件之前调用</li>
+<li>mounted：在绑定元素的父组件被挂载后调用</li>
+<li>beforeUpdate：在更新包含组件的 VNode 之前调用</li>
+<li>updated：在包含组件的 VNode 及其子组件的 VNode 更新后调用</li>
+<li>beforeUnmount：在卸载绑定元素的父组件之前调用</li>
+<li>unmounted：当指令与元素解除绑定且父组件已卸载时，只调用一次</li>
+</ol>
+</li>
+<li>指令的参数和修饰符<ol>
+<li><p>&#96;&#96;&#96;js<br>  &lt;button v-why:info.aaa.bbb&#x3D;”{name:”coderWhy”,age:18}”&gt;</button><br>   &#x2F;&#x2F;  info是参数的名称  aaa-bbb是修饰符的名称  后面是传入的具体的值</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">5. 时间格式化自定义指令</span><br><span class="line">   1. ```js</span><br><span class="line">       import dayjs from &#x27;dayjs&#x27;</span><br><span class="line"></span><br><span class="line">       export default function(app)&#123;</span><br><span class="line">          let formate=&quot;YYYY-MM-DD HH:MM:ss&quot;</span><br><span class="line">          app.directive(&#x27;formate.time&#x27;,&#123;</span><br><span class="line">            created(el,bingings)&#123;</span><br><span class="line">                if (bingings.value) &#123;</span><br><span class="line">                 formate= bingings.value</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            mounted(el)&#123;</span><br><span class="line">                const textContent =el.textContent</span><br><span class="line">                let timesTamp=parseInt(el.textContent)</span><br><span class="line">                if (textContent.length===10) &#123;</span><br><span class="line">                    timesTamp=timesTamp*10000</span><br><span class="line">                &#125;</span><br><span class="line">                console.log(&quot;timesTamp&quot;,timesTamp)</span><br><span class="line">                el.textContent=dayjs(timesTamp).format(format)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;)</span><br><span class="line">      </span><br><span class="line">       &#125;</span><br><span class="line">        </span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="telePort"><a href="#telePort" class="headerlink" title="telePort"></a>telePort</h1><ol>
+<li><p>使用条件：组件a在组价b中使用组件a中的template元素会被挂载到组件b中。不希望被挂载到组件树上就可以通过teleport来完成</p>
+</li>
+<li><p>属性：</p>
+<ol>
+<li>to：指定将其中的内容移动到的目标元素，可以使用选择器</li>
+<li>disabled：是否禁用 teleport 的功能</li>
+</ol>
+</li>
+<li><p>在 teleport 中使用组件，并且也可以给他传入一些数据</p>
+</li>
+<li><p>多个teleport</p>
+<ol>
+<li>多个teleport应用到同一个目标上（to的值相同），那么这些目标会进行合并<h1 id="vue插件"><a href="#vue插件" class="headerlink" title="vue插件"></a>vue插件</h1></li>
+</ol>
+</li>
+<li><p>作用：像vue全局添加一些功能时就会使用插件</p>
+</li>
+<li><p>编写方式：</p>
+<ol>
+<li><pre><code class="js"> // p对象类型：一个对象，但是必须包含一个 install 的函数，该函数会在安装插件时执行
+ export default&#123;
+     name:why,
+     install(app,options)&#123;
+         console.log(&quot;插件安装&quot;,app,options)
+         console.log(this.name)
+     &#125;
+ &#125;
+ 
+</code></pre>
+</li>
+<li><pre><code class="js"> // 函数类型：一个function，这个函数会在安装插件时自动执行
+ export default function(app,options)&#123;
+         console.log(&quot;插件安装&quot;,app,options)    
+     
+ &#125;
+</code></pre>
+</li>
+</ol>
+</li>
+<li><p>功能：</p>
+<ol>
+<li>添加全局方法或者 property，通过把它们添加到 config.globalProperties 上实现</li>
+<li>p添加全局资源：指令&#x2F;过滤器&#x2F;过渡等</li>
+<li>p添加全局资源：指令&#x2F;过滤器&#x2F;过渡等</li>
+</ol>
+</li>
+</ol>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>an31742</li>
+    <li><strong>本文链接：</strong><a href="https://an31742.github.io/2022/07/19/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bvue3%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95/index.html" title="https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;19&#x2F;%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bvue3%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95&#x2F;index.html">https:&#x2F;&#x2F;an31742.github.io&#x2F;2022&#x2F;07&#x2F;19&#x2F;%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bvue3%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue3/" rel="tag">vue3</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2022/07/19/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bvue3%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/"><i class="iconfont iconleft"></i>前端学习之vue3源码学习</a>
+    <a href="/2022/07/19/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E4%B9%8Bvuecli%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">前端学习之vuecli项目搭建<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vue3%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95"><span class="toc-text">vue3高级语法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#telePort"><span class="toc-text">telePort</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vue%E6%8F%92%E4%BB%B6"><span class="toc-text">vue插件</span></a></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
