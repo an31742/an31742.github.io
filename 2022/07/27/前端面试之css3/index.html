@@ -201,7 +201,7 @@
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 27, 2022</span>
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2624</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2942</span>
     </div>
   </div>
 </section>
@@ -277,6 +277,16 @@
 <h4 id="rem是什么"><a href="#rem是什么" class="headerlink" title="rem是什么"></a>rem是什么</h4><ul>
 <li>是相对于根元素的长度单位   html的font-size</li>
 </ul>
+<h3 id="CSS移动"><a href="#CSS移动" class="headerlink" title="CSS移动"></a>CSS移动</h3><ul>
+<li><p>position: relative; transform: translate(30px, 30px);都是相对自己的位置在移动，有什么区别呢？</p>
+</li>
+<li><p>从页面布局的角度看效果是一样的。</p>
+</li>
+<li><p>从动画角度来说使用transform时，可以让 GPU 参与运算，动画的 FPS 更高。position时，最小的动画变化的单位是1px，transform参与时，可以做到更小（动画效果更加平滑）position 是为页面布局而生的。transform 是为动画而生的。<br>功能都一样。</p>
+</li>
+<li><p>但是translate不会引起浏览器的重绘和重排，这就相当nice了。这点就很牛逼了。页面不会Repaint（没有重新计算render tree）</p>
+</li>
+</ul>
 
       </section>
       <section class="extra">
@@ -319,7 +329,7 @@
           
   <aside class="toc-wrap">
     <h3 class="toc-title">文章目录：</h3>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS%E7%9B%92%E6%A8%A1%E5%9E%8B"><span class="toc-text">CSS盒模型</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS%E7%9B%92%E6%A8%A1%E5%9E%8B"><span class="toc-text">CSS盒模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS%E7%A7%BB%E5%8A%A8"><span class="toc-text">CSS移动</span></a></li></ol>
   </aside>
 
         
