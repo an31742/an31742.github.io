@@ -203,7 +203,7 @@
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 28, 2022</span>
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1843</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1855</span>
     </div>
   </div>
 </section>
@@ -241,7 +241,7 @@
 <h1 id="vite"><a href="#vite" class="headerlink" title="vite"></a>vite</h1><ul>
 <li>配置：Vite默认支持零配置，这意味着大多数情况下你不需要手动配置。但是如果需要自定义配置，你可以在项目根目录创建一个vite.config.js文件，并在其中设置你的配置选项</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-    基于ESM的Dev server      </span><br><span class="line">     -    当 import 模块时，浏览器就会下载被导入的模块。先启动开发服务器，当代码执行到模块加载时再请求对应模块的文件,本质上实现了动态加载</span><br><span class="line">-    基于ESM 的 HMR 热更新    </span><br><span class="line">     -     主要是通过WebSocket创建浏览器和服务器的通信监听文件的改变，当文件被修改时，服务端发送消息通知客户端修改相应的代码，客户端对应不同的文件进行不同的操作的更新。</span><br><span class="line">-    基于esbuild的依赖预编译优化   </span><br><span class="line">     -    通过预构建 lodash-es 成为一个模块，也就只需要一个 HTTP</span><br><span class="line">         *    esbuild则选择使用 Go 语言编写将语言转为机器语言，在启动的时候直接执行即可，在 CPU 密集场景下，Go 更具性能优势</span><br><span class="line">         *    Go多线程又是</span><br><span class="line">-   基于Rollup的 Plugins   同时Vite也基于Rollup plugins机制提供了强大的插件API。目前和 Vite 兼容或者内置的插件，</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-    基于ESM的Dev server      </span><br><span class="line">     -    当 import 模块时，浏览器就会下载被导入的模块。先启动开发服务器，当代码执行到模块加载时再请求对应模块的文件,本质上实现了动态加载</span><br><span class="line">-    基于ESM 的 HMR 热更新    </span><br><span class="line">     -     主要是通过WebSocket创建浏览器和服务器的通信监听文件的改变，当文件被修改时，服务端发送消息通知客户端修改相应的代码，客户端对应不同的文件进行不同的操作的更新。</span><br><span class="line">-    基于esbuild的依赖预编译优化   </span><br><span class="line">     -    通过预构建 lodash-es 成为一个模块，也就只需要一个 HTTP</span><br><span class="line">         *    esbuild则选择使用 Go 语言编写将语言转为机器语言，在启动的时候直接执行即可，在 CPU 密集场景下，Go 更具性能优势</span><br><span class="line">         *    Go多线程又是</span><br><span class="line">-   基于Rollup的 Plugins   </span><br><span class="line">     -    同时Vite也基于Rollup plugins机制提供了强大的插件API。目前和 Vite 兼容或者内置的插件，</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
 
 
 <p>优点：</p>
